@@ -27,7 +27,7 @@ Web Layer contains: Servlet -> WebSocket -> Web
 * Maven is the most popular Project Management tool
 * Can download the jar files needed for your project
 * Structure:
-![Standard Directory Structure](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/structure-directory.png "Standard Directory Structure")
+![Standard Directory Structure](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/structure-directory.PNG "Standard Directory Structure")
 * To find dependency: spring.io, hibernate.org, search.maven.org
 * Maven Wrapper files 
     * mvnw allows you to run Maven project
@@ -35,7 +35,7 @@ Web Layer contains: Servlet -> WebSocket -> Web
     * if you have maven installed in your pc run: 
         * ./mvnw package
         * ./mvnw spring-boot:run
-![mvnw](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/mvnw.png "mvnw")
+![mvnw](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/mvnw.PNG "mvnw")
 * Warning: Do not use the src/main/weapp directory if your application is a packaged as a JAR. Although tihis is a standard Maven directory, it works only with WAR packaging. 
 
 ## Spring Boot
@@ -205,7 +205,7 @@ applicationContext.xml
     <constructor-arg ref="myFortuneService"/>
 </bean>
 ```
-![Spring behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Spring-behind-the-scene.png "Spring behind the scene")
+![Spring behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Spring-behind-the-scene.PNG "Spring behind the scene")
 
 ## Setter injection
 * se crea un metodo setter para la inyección
@@ -222,5 +222,5 @@ public void setFortuneService(FortuneService fortuneService){
     <property name="fortuneServ" ref="myFortune" />
 </bean>
 ```
-![Setter injection](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Setter-injection.png "Setter injection")
-![Setter injection behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Setter-injection-behind-the-scene.png "Setter injection behind the scene")
+![Setter injection](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Setter-injection.PNG "Setter injection")
+![Setter injection behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Setter-injection-behind-the-scene.PNG "Setter injection behind the scene")
