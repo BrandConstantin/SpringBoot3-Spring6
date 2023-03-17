@@ -55,7 +55,7 @@ Web Layer contains: Servlet -> WebSocket -> Web
 </properties>
 ```
 
-![spring-boot-starter](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-boot-starter.PNG "spring-boot-starter")
+![Spring Boot Starter](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-boot-starter.PNG "Spring Boot Starter")
 
 ## Spring Boot Dev Tools
 - for automatic restart, when add new dependencies to pom file for example, use spring-boot-devtools 
