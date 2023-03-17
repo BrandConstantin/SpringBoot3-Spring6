@@ -108,6 +108,30 @@ management.endpoints.web.exposure.exclude=health,info
     * java -jar
     * mvnw spring-boot:run
 
+## Anotaciones:
+* @Override - override the method from the principal class
+* @Component - mark a class like a spring bean and make the bean available for dependency injection
+* @Autowired - allow injecting as a bean after a constructor, method or attribute is created
+* @Qualifier - when there are one or more beans created and you want to use one of them, use this annotation together with @Autowired to specify which bean to use
+* @Scope - specifies the scope of the bean
+* @PostConstruct - to execute code during bean initialization
+* @PreDestroy - to execute code during bean destruction
+* @Configuration - define a class for bean creation
+* @ComponentScan - indicate in which package to start searching for components
+* @Bean - defines a bean
+* @Controller - inherits from @Component
+* @RequestMapping - used to map URLs to a class or method
+* @RequestParam - get a parameter from the request
+* @InitBinder - processes requests to the controller
+* @Entity - to map a table from the database
+* @Table - to specify the database table
+* @Column - indicate the database column
+* @Id - pk of a table
+* @OneToOne
+* @OneToMany
+* @ManyToOne
+* @ManyToMany    
+
 ## Injecting custom application properties
 * By default is located in src/main/resources/application.properties
 * With @Value annotation we can define a custom properties
@@ -139,11 +163,11 @@ server.servlet.context-path=/home
 ```
 * the result is http://127.0.0.1:7070/home/teamInfo
 
-## Inversion Of Control 
+# Inversion Of Control 
 * Design process and outsource, build and manage objects
 * Interfaces are used and the application must be as configurable as possible
 
-### Spring Container y sus funciones
+## Spring Container y sus funciones
 * create and manage objects (Inversion of control)
 * inject dependencies (dependency injections)
 * for spring container configuration use:
@@ -151,7 +175,7 @@ server.servlet.context-path=/home
     * java annotations
     * java code
 
-### Spring development process:
+## Spring development process:
 * Configuration of a spring bean
 ```
 <bean id="myCoach" class="inversionOfControl.TrackCoach"></bean>
@@ -165,7 +189,7 @@ ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("app
 Coach theCoach = context.getBean("myCoach", Coach.class);
 ```
 
-### Constructor injection development process:
+## Constructor injection development process:
 * Define the dependency class and the interface
 File: FortuneService.java
 ```
@@ -206,16 +230,28 @@ applicationContext.xml
 </bean>
 ```
 ![Spring behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Spring-behind-the-scene.PNG "Spring behind the scene")
+![Spring process](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-process.png "Spring process")
+
+## Component Scanner
+* Scan the java classes for this special annotations and automatically register the beans in the spring container
+* The @Component tag composed by: @EnableAutoConfiguration, @ComponentScan and @Configuration
+![Spring  boot application](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-boot-application.png "Spring boot application")
+![Component scanning](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/component-scanning.png "Component scanning")
+* By default Spring Boot will not component scan the package with demo name
+* Explicit component scanning
+![Explicitly list of packages](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/explicit-list-package.png "Explicitly list of packages")
 
 ## Setter injection
-* se crea un metodo setter para la inyección
+* Create the setter method for injection
 ```
 private FortuneService fortuneService;
+
+@Autowired
 public void setFortuneService(FortuneService fortuneService){
     this.fortuneService = fortuneService;
 }
 ```
-* se configura la dependencia para la inyección en el fichero de configuración
+* config the dependency for injection in the config file
 ```
 <bean id="myCricketCoach" class="setterinjection.CricketCoach">
     <!-- set up the constructor injection -->
@@ -224,3 +260,4 @@ public void setFortuneService(FortuneService fortuneService){
 ```
 ![Setter injection](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Setter-injection.PNG "Setter injection")
 ![Setter injection behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Setter-injection-behind-the-scene.PNG "Setter injection behind the scene")
+![Spring process setter injection](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/setter-injection-process.png "Spring process setter injection")
