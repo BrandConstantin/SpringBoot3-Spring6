@@ -54,6 +54,7 @@ Web Layer contains: Servlet -> WebSocket -> Web
     <java.version> 17 </java.version>
 </properties>
 ```
+
 ![spring-boot-starter](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-boot-starter.PNG "spring-boot-starter")
 
 ## Spring Boot Dev Tools
@@ -66,7 +67,9 @@ Web Layer contains: Servlet -> WebSocket -> Web
 - add the REST endpoints automatically to application
 - endpoints: /health and /info
 - we need to update the application.properties
+
 ![actuator-endpoints](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/actuator-endpoints.PNG "actuator-endpoints")
+
 - add the endpoints and the artifact in pom file
 ```
 management.endpoints.web.exposure.include=health,info
@@ -84,9 +87,13 @@ Tomcat started on port(s): 8080 (http) with context path ''
 
 ## Spring Boot Actuator - securing endpoints
 - add dependency spring-boot-security
+
 ![actuator-security](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/actuato-security.PNG "actuator-security")
+
 - override default user name and generated a password
+
 ![actuator-security-pass](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/actuator-security-pass.PNG "actuator-security-pass")
+
 - we also can exclude endopoints
 ```
 management.endpoints.web.exposure.exclude=health,info
@@ -94,7 +101,9 @@ management.endpoints.web.exposure.exclude=health,info
 
 ## Spring Boot from command line
 - You don't need to have a server install or a IDE
+
 ![command-line](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/command-line.PNG "command-line")
+
 - Two options for running the app
     - java -jar
     - mvnw spring-boot:run
