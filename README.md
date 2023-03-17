@@ -55,7 +55,7 @@ Web Layer contains: Servlet -> WebSocket -> Web
 </properties>
 ```
 
-![Spring Boot Starter](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-boot-starter.PNG "Spring Boot Starter")
+![Spring Boot Starter](https://github.com//spring-boot-starter.PNG "Spring Boot Starter")
 
 ## Spring Boot Dev Tools
 - for automatic restart, when add new dependencies to pom file for example, use spring-boot-devtools 
@@ -205,7 +205,7 @@ applicationContext.xml
     <constructor-arg ref="myFortuneService"/>
 </bean>
 ```
-![Spring behind the scene](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/Spring-behind-the-scene.PNG "Spring behind the scene")
+![Spring behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Spring-behind-the-scene.PNG "Spring behind the scene")
 
 ## Setter injection
 * se crea un metodo setter para la inyección
@@ -222,5 +222,5 @@ public void setFortuneService(FortuneService fortuneService){
     <property name="fortuneServ" ref="myFortune" />
 </bean>
 ```
-![Setter injection](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/Setter-injection.PNG "Setter injection")
-![Setter injection behind the scene](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/Setter-injection-behind-the-scene.PNG "Setter injection behind the scene")
+![Setter injection](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Setter-injection.PNG "Setter injection")
+![Setter injection behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Setter-injection-behind-the-scene.PNG "Setter injection behind the scene")
