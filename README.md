@@ -55,7 +55,7 @@ Web Layer contains: Servlet -> WebSocket -> Web
 </properties>
 ```
 
-![Spring Boot Starter](https://github.com//spring-boot-starter.PNG "Spring Boot Starter")
+![Spring Boot Starter](https://github.com//BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-boot-starter.PNG "Spring Boot Starter")
 
 ## Spring Boot Dev Tools
 - for automatic restart, when add new dependencies to pom file for example, use spring-boot-devtools 
@@ -86,27 +86,27 @@ Tomcat started on port(s): 8080 (http) with context path ''
 - to analyzing and profiling your application performance /actuator/threaddump
 
 ## Spring Boot Actuator - securing endpoints
-- add dependency spring-boot-security
+* add dependency spring-boot-security
 
 ![Actuator security](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/actuato-security.PNG "Actuator security")
 
-- override default user name and generated a password
+* override default user name and generated a password
 
 ![Actuator security pass](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/actuator-security-pass.PNG "Actuator security pass")
 
-- we also can exclude endopoints
+* we also can exclude endopoints
 ```
 management.endpoints.web.exposure.exclude=health,info
 ```
 
 ## Spring Boot from command line
-- You don't need to have a server install or a IDE
+* You don't need to have a server install or a IDE
 
 ![Command line](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/command-line.PNG "Command line")
 
-- Two options for running the app
-    - java -jar
-    - mvnw spring-boot:run
+* Two options for running the app
+    * java -jar
+    * mvnw spring-boot:run
 
 ## Injecting custom application properties
 - By default is located in src/main/resources/application.properties
