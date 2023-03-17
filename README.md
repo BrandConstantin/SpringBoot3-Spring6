@@ -27,7 +27,7 @@ Web Layer contains: Servlet -> WebSocket -> Web
 * Maven is the most popular Project Management tool
 * Can download the jar files needed for your project
 * Structure:
-![Standard Directory Structure](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/structure-directory.PNG "Standard Directory Structure")
+![Standard Directory Structure](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/structure-directory.png "Standard Directory Structure")
 * To find dependency: spring.io, hibernate.org, search.maven.org
 * Maven Wrapper files 
     * mvnw allows you to run Maven project
@@ -35,7 +35,7 @@ Web Layer contains: Servlet -> WebSocket -> Web
     * if you have maven installed in your pc run: 
         * ./mvnw package
         * ./mvnw spring-boot:run
-![mvnw](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/mvnw.PNG "mvnw")
+![mvnw](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/mvnw.png "mvnw")
 * Warning: Do not use the src/main/weapp directory if your application is a packaged as a JAR. Although tihis is a standard Maven directory, it works only with WAR packaging. 
 
 ## Spring Boot
@@ -55,7 +55,7 @@ Web Layer contains: Servlet -> WebSocket -> Web
 </properties>
 ```
 
-![Spring Boot Starter](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-boot-starter.PNG "Spring Boot Starter")
+![Spring Boot Starter](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-boot-starter.png "Spring Boot Starter")
 
 ## Spring Boot Dev Tools
 * for automatic restart, when add new dependencies to pom file for example, use spring-boot-devtools 
@@ -68,7 +68,7 @@ Web Layer contains: Servlet -> WebSocket -> Web
 * endpoints: /health and /info
 * we need to update the application.properties
 
-![Actuator endpoints](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/actuator-endpoints.PNG "Actuator endpoints")
+![Actuator endpoints](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/actuator-endpoints.png "Actuator endpoints")
 
 * add the endpoints and the artifact in pom file
 ```
@@ -88,11 +88,11 @@ Tomcat started on port(s): 8080 (http) with context path ''
 ## Spring Boot Actuator - securing endpoints
 * add dependency spring-boot-security
 
-![Actuator security](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/actuato-security.PNG "Actuator security")
+![Actuator security](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/actuato-security.png "Actuator security")
 
 * override default user name and generated a password
 
-![Actuator security pass](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/actuator-security-pass.PNG "Actuator security pass")
+![Actuator security pass](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/actuator-security-pass.png "Actuator security pass")
 
 * we also can exclude endopoints
 ```
@@ -102,7 +102,7 @@ management.endpoints.web.exposure.exclude=health,info
 ## Spring Boot from command line
 * You don't need to have a server install or a IDE
 
-![Command line](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/command-line.PNG "Command line")
+![Command line](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/command-line.png "Command line")
 
 * Two options for running the app
     * java -jar
@@ -126,12 +126,12 @@ public class FunRestController{
 ## Configure Spring Boot Server
 * Spring Boot properties have more than 1000. The properties are grouped into the following categories: core, web, security, data, acutator, integration, devtools, testing
 * Core properties:
-![Core Properties](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/core-properties.PNG "Core Properties")
+![Core Properties](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/core-properties.png "Core Properties")
 * Create your own log file > logging.file=my-stuff.log
 * Web properties
-![Web Properties](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/web-properties.PNG "Web Properties")
+![Web Properties](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/web-properties.png "Web Properties")
 * Data properties:
-![Data Properties](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/data-properties.PNG "Data Properties")
+![Data Properties](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/data-properties.png "Data Properties")
 * Server properties:
 ```
 server.port=7070
@@ -205,7 +205,7 @@ applicationContext.xml
     <constructor-arg ref="myFortuneService"/>
 </bean>
 ```
-![Spring behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Spring-behind-the-scene.PNG "Spring behind the scene")
+![Spring behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Spring-behind-the-scene.png "Spring behind the scene")
 
 ## Setter injection
 * se crea un metodo setter para la inyección
@@ -222,5 +222,5 @@ public void setFortuneService(FortuneService fortuneService){
     <property name="fortuneServ" ref="myFortune" />
 </bean>
 ```
-![Setter injection](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Setter-injection.PNG "Setter injection")
-![Setter injection behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Setter-injection-behind-the-scene.PNG "Setter injection behind the scene")
+![Setter injection](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Setter-injection.png "Setter injection")
+![Setter injection behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Setter-injection-behind-the-scene.png "Setter injection behind the scene")
