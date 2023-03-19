@@ -329,3 +329,23 @@ System.out.println(theCoach + " / " + alphCoach);
 ![Additional Bean Scopes](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/aditional-bean-scopes.png "Additional Bean Scopes")
 ---------------------------------------------------------
 ![New injection for each object](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/new-injection-for-each-object.png "New injection for each object")
+
+## Bean Lifecycle Methods
+* Custom code can be added during bean initialization or bean destruction
+* `init-method` is the method to initialize an action during bean initialization
+* `destroy-method` is the method to initialize an action during bean destruction
+```
+<bean id="myCoach" class="beanlifecycle.TrackCoach" 
+	init-method="doInitMethod" destroy-method="doDestroyMehtod">
+</bean>
+```
+* The scope prototype does not have the destroy method so it cannot be initialized. In order to do this, the destroy() method is defined.
+
+## Java Config Bean
+* In 3 steps:
+    * Create @Configuration class
+![@Configuarion class](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/step1.png "@Configuarion class")    
+    * Define @Bean method
+![@Bean Method](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/step2.png "@Bean Method")  
+    * Inject the bean
+![Inject the bean](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/step3.png "Inject the bean")  
