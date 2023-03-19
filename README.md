@@ -113,6 +113,8 @@ management.endpoints.web.exposure.exclude=health,info
 * @Component - mark a class like a spring bean and make the bean available for dependency injection
 * @Autowired - allow injecting as a bean after a constructor, method or attribute is created
 * @Qualifier - when there are one or more beans created and you want to use one of them, use this annotation together with @Autowired to specify which bean to use
+* @Primary - to identify the principal bean, it is an alternative to @Qualifier
+* @Lazy bean is only initialized if needed for dependency injection
 * @Scope - specifies the scope of the bean
 * @PostConstruct - to execute code during bean initialization
 * @PreDestroy - to execute code during bean destruction
@@ -167,7 +169,7 @@ server.servlet.context-path=/home
 * Design process and outsource, build and manage objects
 * Interfaces are used and the application must be as configurable as possible
 
-## Spring Container y sus funciones
+## Spring Container and his functions
 * create and manage objects (Inversion of control)
 * inject dependencies (dependency injections)
 * for spring container configuration use:
@@ -188,6 +190,11 @@ ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("app
 ```
 Coach theCoach = context.getBean("myCoach", Coach.class);
 ```
+
+## Spring Injection types
+* Constructor injection
+* Setter injection
+* Field injection (not recommended by spring.io)
 
 ## Constructor injection development process:
 * Define the dependency class and the interface
@@ -230,6 +237,7 @@ applicationContext.xml
 </bean>
 ```
 ![Spring behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Spring-behind-the-scene.PNG "Spring behind the scene")
+---------------------------------------------------------
 ![Spring process](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-process.png "Spring process")
 
 ## Component Scanner
@@ -261,3 +269,58 @@ public void setFortuneService(FortuneService fortuneService){
 ![Setter injection](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Setter-injection.PNG "Setter injection")
 ![Setter injection behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Setter-injection-behind-the-scene.PNG "Setter injection behind the scene")
 ![Spring process setter injection](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/setter-injection-process.png "Spring process setter injection")
+
+## Qualifiers
+* When have a lot a different classes that implement a injection class and use different @Components how Spring use
+![Multiple implementation](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/multiple-implementation.png "Multiple implementation")
+![Qualifier](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/qualifier.png "Qualifier")
+```
+	@Autowired
+	@Qualifier("happyFortuneService")
+	private FortuneService fService;
+```
+* Or can do it directly in the constructor
+```
+    @Autowired
+    public DemoController(@Qualifier("baseballCoach") Coach theCoach){
+        myCoach = theCoach;
+    }
+```
+## @Primary
+* Other alternative to @Qualifier is @Primary
+
+## Lazy initialization
+* With @Lazy bean is only initialized if needed for dependency injection
+* For global configuration add lazy to application.properties '''spring.main.lazy-initialization=true'''
+* Advantages: 
+    * only create objects as needed
+    * may help with faster startup time if you have large number of components
+* Disadvantages:
+    * if you have web related components like @RestController, not created until requested
+    * need enough memory for all beans once created
+* It is deseabled by default
+
+## Bean scopes
+* Default scop is singleton
+* all dependency injection for the bean will referenece the same bean
+* The scope of a bean refers to the life cycle of a bean, how long it will exist, how many instances will be created and how the bean will be shared
+* By default the bean will be singleton type. Singleton type creates a single instance per bean by default, it is stored in cache memory, all requests for this bean will give us a shared reference to the same bean.
+```
+Coach theCoach = context.getBean("myCoach", Coach.class);
+Coach alphCoach = context.getBean("myCoach", Coach.class);
+
+// check if the beans are the same		
+boolean result = false;
+result = (theCoach == alphCoach);
+
+System.out.println("Pointing to the same object: " + result);
+System.out.println(theCoach + " / " + alphCoach);
+```
+* With scope prototype no longer point to the same bean object
+```
+    <bean id="myCoach" class="beanscopes.BaseballCoach" scope="prototype"></bean>
+```
+![Bean Scopes](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/bean-scopes.png "Bean Scopes")
+* Type of scopes
+![Additional Bean Scopes](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/aditional-bean-scopes.png "Additional Bean Scopes")
+![New injection for each object](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/new-injection-for-each-object.png "New injection for each object")
