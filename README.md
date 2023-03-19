@@ -244,6 +244,7 @@ applicationContext.xml
 * Scan the java classes for this special annotations and automatically register the beans in the spring container
 * The @Component tag composed by: @EnableAutoConfiguration, @ComponentScan and @Configuration
 ![Spring  boot application](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-boot-application.png "Spring boot application")
+---------------------------------------------------------
 ![Component scanning](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/component-scanning.png "Component scanning")
 * By default Spring Boot will not component scan the package with demo name
 * Explicit component scanning
@@ -267,12 +268,15 @@ public void setFortuneService(FortuneService fortuneService){
 </bean>
 ```
 ![Setter injection](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Setter-injection.PNG "Setter injection")
+---------------------------------------------------------
 ![Setter injection behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Setter-injection-behind-the-scene.PNG "Setter injection behind the scene")
+---------------------------------------------------------
 ![Spring process setter injection](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/setter-injection-process.png "Spring process setter injection")
 
 ## Qualifiers
 * When have a lot a different classes that implement a injection class and use different @Components how Spring use
 ![Multiple implementation](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/multiple-implementation.png "Multiple implementation")
+---------------------------------------------------------
 ![Qualifier](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/qualifier.png "Qualifier")
 ```
 	@Autowired
@@ -323,4 +327,5 @@ System.out.println(theCoach + " / " + alphCoach);
 ![Bean Scopes](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/bean-scopes.png "Bean Scopes")
 * Type of scopes
 ![Additional Bean Scopes](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/aditional-bean-scopes.png "Additional Bean Scopes")
+---------------------------------------------------------
 ![New injection for each object](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/new-injection-for-each-object.png "New injection for each object")
