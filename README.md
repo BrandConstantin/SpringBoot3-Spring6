@@ -393,6 +393,7 @@ System.out.println(theCoach + " / " + alphCoach);
 ### Development Process 2
 * Modify the application.properties:
 ![Datasource](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/datasource.png "Datasource")  
+---------------------------------------------------------
 ![command-line-app](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/command-line-app.png "command-line-app")  
 * When run the application if the connect to BBDD es correctly we se the messages:
 ```
@@ -407,14 +408,16 @@ spring.main.banner-mode=off
 # reduce logging level, set to warn
 logging.level.root=warn
 ```
-
-
+## JPA Dev Process
+* Annotate Java Class
+* Develop Java Code to perform database operations
+* If you don't declare any constructors in Java, Java will privide a no-argument constructor for you
 
 
 * Exist two options for mapping
 	* xml config file
 	* java annotations (is more modern)
-* Annotate java class
+* Map class and fields to table and columns
 ```
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -425,6 +428,7 @@ import javax.persistence.Table;
 @Table(name="student")
 public class Student {
 	@Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
 	@Column(name="first_name")
@@ -437,6 +441,14 @@ public class Student {
 	..........
 }
 ```
+* @Column is optional but recommandly if you update BBDD column
+
+### Primary Keys
+* Id generation strategies
+	* GenerationType.AUTO - pick an appropiate strateg for the particular database
+	* GenerationType.IDENTITY - asign primary keys using database identity columns
+	* GenerationType.SEQUENCE - assing primary keys using a database secuence
+	* GenerationType.TABLE - assign primary keys using an underlying database table to ensure uniqueness
 * Key players
 	* SessionFactory:
 		* reads the hibernate config file
