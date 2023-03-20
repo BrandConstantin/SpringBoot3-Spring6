@@ -509,9 +509,93 @@ private void createStudent(StudentDAO studentDAO) {
     System.out.println("Student saved with id " + tempStudent.getId());
 }
 ```
+### Dev process for read
+* Add DAO interface
+```
+public interface StudentDAO {
+    Student findById(Integer id);
+}
+```
+* Add DAO implementation
+```
+@Repository
+public class StudentDAOImpl implements StudentDAO{
+    @Override
+    public Student findById(Integer id) {
+        return entityManager.find(Student.class, id);
+    }
+}
+```
+* Update app
+```
+	private void readStudent(StudentDAO studentDAO) {
+		// create a student object
+		Student tempStudent = new Student("Daffy", "Duckovicy", "daffy@duck.ru");
 
+		// save the student
+		studentDAO.save(tempStudent);
 
+		// display id of the save student
+		int theId = tempStudent.getId();
 
+		// retrive the student based in primary key
+		Student myStudent = studentDAO.findById(theId);
+
+		// display student
+		System.out.println("Find the student " + myStudent);
+	}
+```
+## JPQL
+* JPQL is a query language for retrieving object and is similar in concept with SQL
+* Is based on entity name and entity fields
+![JPQL](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/JPQL.png "JPQL") 
+---------------------------------------------------------
+![JPQL2](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/JPQL2.png "JPQL2") 
+---------------------------------------------------------
+![JPQL with parameters](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/JPQL3.png "JPQL with parameters") 
+### Dev process JPQL
+* Add DAO interface
+```
+public interface StudentDAO {   
+    List<Student> findAll();
+}
+```
+* Add DAO implementation
+```
+@Repository
+public class StudentDAOImpl implements StudentDAO{
+    @Override
+    public List<Student> findAll() {
+        // create query
+        TypedQuery<Student> theQuery = entityManager.createQuery("FROM Student", Student.class);
+        
+        // return query result
+        return theQuery.getResultList();
+    }
+}
+```
+* Update app
+```
+@SpringBootApplication
+public class Application {
+	@Bean
+	public CommandLineRunner commandLineRunner(StudentDAO studentDAO){
+		return runner ->{
+			readAllStudents(studentDAO);
+		};
+	}
+}
+
+private void readAllStudents(StudentDAO studentDAO) {
+    // get a list of students
+    List<Student> theStudents = studentDAO.findAll();
+
+    // display the students
+    for(Student tempStudent: theStudents){
+        System.out.println(tempStudent);
+    }
+}
+```
 
 
 
