@@ -126,6 +126,8 @@ management.endpoints.web.exposure.exclude=health,info
 * @RequestParam - get a parameter from the request
 * @InitBinder - processes requests to the controller
 * @Entity - to map a table from the database
+* @Transactional - is an annotation to begin and the end of a transaction in in JPA code, is no need to implement because Spring do it behind the scenes
+* @Repository - is use for the DAOs
 * @Table - to specify the database table
 * @Column - indicate the database column
 * @Id - pk of a table
@@ -449,6 +451,78 @@ public class Student {
 	* GenerationType.IDENTITY - asign primary keys using database identity columns
 	* GenerationType.SEQUENCE - assing primary keys using a database secuence
 	* GenerationType.TABLE - assign primary keys using an underlying database table to ensure uniqueness
+* Data Access Object (DAO):
+    * save()
+    * findById()
+    * findAll()
+    * findByLastName()
+    * update()
+    * delete()
+    * deleteAll()
+![JPA Entity Manager](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/JPA-EntityManager.png "JPA Entity Manager")  
+### Dev process for create:
+* Define DAO interface
+```
+public interface StudentDAO {
+    void save(Student theStudent);
+}
+```
+* Define DAO implementation and inject entity manager
+```
+@Repository
+public class StudentDAOImpl implements StudentDAO{
+    // define field for entity manager
+    private EntityManager entityManager;
+
+    // inject entity manager using constructor injection
+    @Autowired // Autowired is optional if you have only one constructor
+    public StudentDAOImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
+    // implement save method
+    @Override
+    @Transactional
+    public void save(Student theStudent) {
+        entityManager.persist(theStudent);
+    }
+}
+```
+* Update app
+```
+@Bean
+public CommandLineRunner commandLineRunner(StudentDAO studentDAO){
+    return runner ->{
+        //createStudent(studentDAO);
+        createMultipleStudent(studentDAO);
+    };
+}
+
+private void createStudent(StudentDAO studentDAO) {
+    // create the object
+    Student tempStudent = new Student("Paul", "Doe", "paul@doe.com");
+
+    // save the object
+    studentDAO.save(tempStudent);
+
+    // display id of the object
+    System.out.println("Student saved with id " + tempStudent.getId());
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 * Key players
 	* SessionFactory:
 		* reads the hibernate config file
