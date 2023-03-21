@@ -891,7 +891,7 @@ public class StudentRestExceptionHandler {
 ## Service annotation
 * @Service, like @Repository and @RestController, is an annotation that provide Spring
 * Define Service interface
-````
+```
 public interface EmployeeService {
     List<Employee> findAll();
 }
@@ -909,6 +909,72 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Override
     public List<Employee> findAll() {
         return employeeDAO.findAll();
+    }
+}
+```
+### Add or update
+![add-or-update](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/add-or-update.png "add-or-update")
+* When use the @Service the @Transactional annotations need put in the service class
+
+### Dev process CRUD
+* Add DAO interface and DAO implementation
+
+* Add Service interface and Service implementation
+
+* Update the app
+```
+@RestController
+@RequestMapping("/api")
+public class EmployeeController {
+    private EmployeeService employeeService;
+
+    // inject object dao
+    public EmployeeController(EmployeeService theEmployeeService) {
+        employeeService = theEmployeeService;
+    }
+
+    // expose the endpoint to return the list
+    @GetMapping("/employees")
+    public List<Employee> findAll(){
+        return employeeService.findAll();
+    }
+
+    @GetMapping("/employees/{id}")
+    public Employee getEmployee(@PathVariable int id) {
+        Employee theEmployee = employeeService.findById(id);
+
+        if(theEmployee == null){
+            throw new EmployeeNotFoundException("Employee id not found: " + id);
+        }
+
+        return theEmployee;
+    }
+
+    @PostMapping("/employees")
+    public Employee addEmployee(@RequestBody Employee employee){
+        // if in json don't exist an id, id == 0, is a new insert else is a update
+        employee.setId(0);
+        Employee dbEmployee = employeeService.save(employee);
+
+        return dbEmployee;
+    }
+
+    @PutMapping("/employees")
+    public Employee updateEmployee(@RequestBody Employee employee){
+        Employee dbEmployee = employeeService.save(employee);
+        return dbEmployee;
+    }
+
+    @DeleteMapping("/employees/{id}")
+    public String deleteEmployee(@PathVariable int id){
+        Employee dbEmployee = employeeService.findById(id);
+
+        if(dbEmployee == null){
+            throw new EmployeeNotFoundException("Employee with this id not found " + id);
+        }
+
+        employeeService.deleteById(id);
+        return "Employee deleted!";
     }
 }
 ```
