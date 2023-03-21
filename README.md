@@ -130,6 +130,7 @@ management.endpoints.web.exposure.exclude=health,info
 * @Repository - is use for the DAOs
 * @RestController - is use in the REST application, is the sum of @Controller and @ResponseBody
 * @ControllerAdvice - is a filter used to controller all the global exception handlings
+* @Service - intermediate layer for custom business logic, can integrate multiple repositories/DAO and use Service Facade design pattern
 * @Table - to specify the database table
 * @Column - indicate the database column
 * @Id - pk of a table
@@ -885,4 +886,4 @@ public class StudentRestExceptionHandler {
 
 # Spring Boot REST CRUD API
 * REST API with Spring Boot connect to a database
-* 
+* Create the DAO and Entity
