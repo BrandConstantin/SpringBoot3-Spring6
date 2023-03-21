@@ -128,6 +128,7 @@ management.endpoints.web.exposure.exclude=health,info
 * @Entity - to map a table from the database
 * @Transactional - is an annotation to begin and the end of a transaction in in JPA code, is no need to implement because Spring do it behind the scenes
 * @Repository - is use for the DAOs
+* @RestController - is use in the REST application, is the sum of @Controller and @ResponseBody
 * @Table - to specify the database table
 * @Column - indicate the database column
 * @Id - pk of a table
@@ -726,5 +727,13 @@ public class StrudentController {
 
         return theStudents;
     }
+}
+```
+## Path Variable
+* Retravie a single row
+```
+@GetMapping("/students/{id}")
+public Student getStudent(@PathVariable int id){
+    return theStudents.get(id);
 }
 ```
