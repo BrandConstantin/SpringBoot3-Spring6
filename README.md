@@ -681,54 +681,50 @@ public class Application {
 * JPA drop and then create the table, all data lose it. Don't use this in production
 ![ddl-auto](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/ddl-auto.png "ddl-auto") 
 
+# Spring Boot - REST CRUD APIs
+* REST is a language independent, calls can be made over HTTP
+![Rest](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Rest.png "Rest") 
+---------------------------------------------------------
+![CRUD operations](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/crud-operations.png "CRUD operations") 
+* HTTP Response
+![HTTP Response](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/http-response.png "HTTP Response") 
 
-
-
-
-* Key players
-	* SessionFactory:
-		* reads the hibernate config file
-		* creates session objects
-		* heavy-weight object
-		* only create once in your app
-	* session:
-		* wraps a JDBC connection
-		* main object used to save/retrive objects
-		* short-lived object
-		* retrived from SessionFactory
-* Develop java code
+## Spring REST controller
 ```
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+@RestController
+@RequestMapping("/test")
+public class DemoRestController {
+    @GetMapping("/hello")
+    public String sayHello(){
+        return "Hello World";
+    }
+}
+```
+## JSON Data Binding
+* Data binding is the process of converting JSON to a Java POJO
+* This process is also known as mapping, serialization / deserialization, mashalling / unmarshalling
+* Convert JSON to Java POJO, call setter methods on POJO
+![Setter methods POJO](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/setter-methods-pojo.png "Setter methods POJO")
+---------------------------------------------------------
+* Convert Java POJO to JSON, call getter methods on POJO
+![Getter methods POJO](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/getter-methods-pojo.png "Getter methods POJO")
 
-public class CreateStudent {
+## Spring REST Service process
+* Create java POJO class, the Entity
+* Create Spring REST Service using @RestController
+```
+@RestController
+@RequestMapping("/api")
+public class StrudentController {
+    @GetMapping("/students")
+    public List<Student> getStudents(){
+        List<Student> theStudents = new ArrayList<>();
 
-	public static void main(String[] args) {
-		// create session factory
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Student.class).buildSessionFactory();
-		
-		// create session
-		Session session = factory.getCurrentSession();
-		
-		try {
-			// create a java object
-			System.out.println("Create a student object ...");
-			Student tempStudent = new Student("Paul", "Wall", "paul@wall.com");
-			
-			// start a transaction
-			session.beginTransaction();
-			
-			// save a student object
-			System.out.println("Saving the student ...");
-			session.save(tempStudent);
-			
-			// commit transaction
-			session.getTransaction().commit();
-			System.out.println("Done ...");
-		} finally {
-			factory.close();
-		}
-	}
+        theStudents.add(new Student("Pepe", "Percival"));
+        theStudents.add(new Student("María Luisa", "Nazaret"));
+        theStudents.add(new Student("Jesolu", "Xaviter"));
+
+        return theStudents;
+    }
 }
 ```
