@@ -675,8 +675,11 @@ public class Application {
 	}
 }
 ```
-
-
+## Create table with JPA
+* provides an option to automagically create database table
+* It's need to add to application.properties ```spring.jpa.hibernate.ddl-auto=create``` 
+* JPA drop and then create the table, all data lose it. Don't use this in production
+![ddl-auto](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/ddl-auto.png "ddl-auto") 
 
 
 
