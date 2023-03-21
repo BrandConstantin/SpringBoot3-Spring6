@@ -874,4 +874,11 @@ public class StudentRestExceptionHandler {
     }
 }
 ```
-
+## Spring Boot REST API Design
+1. Review API requierements (example employee directory)
+    * REST client should be able to get a list of employee, get a single employee, add a new employee, update or delete
+2. Indentify the entitys
+    * use noun
+3. Use HTTP methods to assing action on resource (GET, POST, PUT, DELETE)
+![Real Time Project](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/real-time-project.png "Real Time Project")
+* Don't use the anti-patters, is a bad practice, for endpoints like: /api/addEmployee, /api/deleteEmployee etc
