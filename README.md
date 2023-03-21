@@ -978,3 +978,73 @@ public class EmployeeController {
     }
 }
 ```
+## Spring Data JPA
+* Previously used JPA API, from now Spring Data JPA
+* If we need to create anothers DAO (customer, student, product etc) it's need to repeat the same code egain
+* Repet pattern
+![DAO pattern](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/dao-pattern.png "DAO pattern")
+* Create a DAO, plug in the entity type and primary key, and with Spring Data we have a CRUD implementation
+* Spring Data provide a JpaRepository to reduce the lines code to 70% 
+### Dev process Spring Data
+* Extends JpaRepository and delete de EmployeeDAO interface and implementation
+* JpaRepository use @Transactional so no need to use it
+```
+public interface EmployeeRepository extends JpaRepository<Employee, Integer> { }
+```
+* Use this repository in app
+```
+@RestController
+@RequestMapping("/api")
+public class EmployeeController {
+    private EmployeeService employeeService;
+
+    // inject object dao
+    public EmployeeController(EmployeeService theEmployeeService) {
+        employeeService = theEmployeeService;
+    }
+
+    // expose the endpoint to return the list
+    @GetMapping("/employees")
+    public List<Employee> findAll(){
+        return employeeService.findAll();
+    }
+
+    @GetMapping("/employees/{id}")
+    public Employee getEmployee(@PathVariable int id) {
+        Employee theEmployee = employeeService.findById(id);
+
+        if(theEmployee == null){
+            throw new EmployeeNotFoundException("Employee id not found: " + id);
+        }
+
+        return theEmployee;
+    }
+
+    @PostMapping("/employees")
+    public Employee addEmployee(@RequestBody Employee employee){
+        // if in json don't exist an id, id == 0, is a new insert else is a update
+        employee.setId(0);
+        Employee dbEmployee = employeeService.save(employee);
+
+        return dbEmployee;
+    }
+
+    @PutMapping("/employees")
+    public Employee updateEmployee(@RequestBody Employee employee){
+        Employee dbEmployee = employeeService.save(employee);
+        return dbEmployee;
+    }
+
+    @DeleteMapping("/employees/{id}")
+    public String deleteEmployee(@PathVariable int id){
+        Employee dbEmployee = employeeService.findById(id);
+
+        if(dbEmployee == null){
+            throw new EmployeeNotFoundException("Employee with this id not found " + id);
+        }
+
+        employeeService.deleteById(id);
+        return "Employee deleted!";
+    }
+}
+``` 
