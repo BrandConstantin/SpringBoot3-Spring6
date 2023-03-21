@@ -1048,3 +1048,29 @@ public class EmployeeController {
     }
 }
 ``` 
+
+## Spring Data REST
+* If we need to create a REST API for another entity is necesary repet the code
+* Spring Data REST leverages the existing JpaRespository and give a REST CRUD implementation
+* Create automatically the endpoints for the entity
+![Spring Data REST](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-data-rest.png "Spring Data REST")
+* HATEOS - provide information to access REST interface
+### Dev process
+* Add Spring Data REST to pom file
+```
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-rest</artifactId>
+			<scope>test</scope>
+		</dependency>
+```
+* For this reason delete the controller and service from previously leassons
+* url: http://localhost:8080/employees
+### Customize base path
+```
+# Spring Data REST
+spring.data.rest.base-path=/magic-app
+```
+* url: http://127.0.0.1:8080/magic-app/employees
+
+
