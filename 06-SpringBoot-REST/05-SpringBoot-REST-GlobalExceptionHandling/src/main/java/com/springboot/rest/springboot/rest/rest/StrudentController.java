@@ -40,4 +40,31 @@ public class StrudentController {
         // index the list
         return theStudents.get(id);
     }
+
+    // add an exception handler using @ExceptionHandler
+    @ExceptionHandler
+    public ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundException exc){
+        // create a error response
+        StudentErrorResponse error = new StudentErrorResponse();
+
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+        error.setMessage(exc.getMessage());
+        error.setTimeStamp(System.currentTimeMillis());
+
+        // return entity
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<StudentErrorResponse> handleException(Exception exc){
+        // create a error response
+        StudentErrorResponse error = new StudentErrorResponse();
+
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        error.setMessage(exc.getMessage()); // se puede cambiar con mensaje personalizado
+        error.setTimeStamp(System.currentTimeMillis());
+
+        // return entity
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 }
