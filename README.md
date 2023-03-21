@@ -887,3 +887,28 @@ public class StudentRestExceptionHandler {
 # Spring Boot REST CRUD API
 * REST API with Spring Boot connect to a database
 * Create the DAO and Entity
+
+## Service annotation
+* @Service, like @Repository and @RestController, is an annotation that provide Spring
+* Define Service interface
+````
+public interface EmployeeService {
+    List<Employee> findAll();
+}
+```
+* Define Service implementation
+```
+@Service
+public class EmployeeServiceImpl implements EmployeeService{
+    private EmployeeDAO employeeDAO;
+
+    public EmployeeServiceImpl(EmployeeDAO theEmployeeDAO) {
+        this.employeeDAO = theEmployeeDAO;
+    }
+
+    @Override
+    public List<Employee> findAll() {
+        return employeeDAO.findAll();
+    }
+}
+```
