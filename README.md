@@ -596,7 +596,7 @@ private void readAllStudents(StudentDAO studentDAO) {
     }
 }
 ```
-* Update
+### Dev process JPQL update
 ![Update](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/update-jpql.png "Update") 
 * Add DAO interface
 ```
@@ -635,8 +635,46 @@ private void updateStudent(StudentDAO studentDAO) {
     System.out.println(myStudent);
 }
 ```
+### Dev process JPQL delete
+* For multiple delete 
+![Multiple delete](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/delete-multiple.png "Multiple delete") 
+* Add DAO interface
+```
+void delete(Integer id);
+```
+* Add DAO implementation
+```
+@Override
+@Transactional
+public void delete(Integer id) {
+    // retrive the student
+    Student theStudent = entityManager.find(Student.class, id);
 
+    // delete the student
+    entityManager.remove(theStudent);
+}
+```
+* Update app
+```
+@SpringBootApplication
+public class Application {
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
+	}
 
+	@Bean
+	public CommandLineRunner commandLineRunner(StudentDAO studentDAO){
+		return runner ->{
+			deleteStudent(studentDAO);
+		};
+	}
+
+	private void deleteStudent(StudentDAO studentDAO) {
+		int studentId = 3;
+		studentDAO.delete(studentId);
+	}
+}
+```
 
 
 
