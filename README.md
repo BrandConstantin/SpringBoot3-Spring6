@@ -882,3 +882,7 @@ public class StudentRestExceptionHandler {
 3. Use HTTP methods to assing action on resource (GET, POST, PUT, DELETE)
 ![Real Time Project](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/real-time-project.png "Real Time Project")
 * Don't use the anti-patters, is a bad practice, for endpoints like: /api/addEmployee, /api/deleteEmployee etc
+
+# Spring Boot REST CRUD API
+* REST API with Spring Boot connect to a database
+* 
