@@ -596,8 +596,45 @@ private void readAllStudents(StudentDAO studentDAO) {
     }
 }
 ```
+* Update
+![Update](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/update-jpql.png "Update") 
+* Add DAO interface
+```
+public interface StudentDAO {   
+    void update(Student theStudent);
+}
+```
+* Add DAO implementation
+```
+@Repository
+public class StudentDAOImpl implements StudentDAO{
+    // define field for entity manager
+    private EntityManager entityManager;
 
-
+    @Override
+    @Transactional
+    public void update(Student theStudent) {
+        entityManager.merge(theStudent);
+    }
+}
+```
+* Update app
+```
+private void updateStudent(StudentDAO studentDAO) {
+    // retrive student bases on the id
+    int studentId = 1;
+    Student myStudent = studentDAO.findById(studentId);
+    
+    // change a column
+    myStudent.setFirstName("Scooby");
+    
+    // update the student
+    studentDAO.update(myStudent);
+    
+    // display the updated student
+    System.out.println(myStudent);
+}
+```
 
 
 
