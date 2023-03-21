@@ -130,6 +130,7 @@ management.endpoints.web.exposure.exclude=health,info
 * @Repository - is use for the DAOs
 * @RestController - is use in the REST application, is the sum of @Controller and @ResponseBody
 * @ControllerAdvice - is a filter used to controller all the global exception handlings
+* @Service - intermediate layer for custom business logic, can integrate multiple repositories/DAO and use Service Facade design pattern
 * @Table - to specify the database table
 * @Column - indicate the database column
 * @Id - pk of a table
@@ -882,3 +883,7 @@ public class StudentRestExceptionHandler {
 3. Use HTTP methods to assing action on resource (GET, POST, PUT, DELETE)
 ![Real Time Project](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/real-time-project.png "Real Time Project")
 * Don't use the anti-patters, is a bad practice, for endpoints like: /api/addEmployee, /api/deleteEmployee etc
+
+# Spring Boot REST CRUD API
+* REST API with Spring Boot connect to a database
+* Create the DAO and Entity
