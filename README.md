@@ -1073,4 +1073,19 @@ spring.data.rest.base-path=/magic-app
 ```
 * url: http://127.0.0.1:8080/magic-app/employees
 
-
+## Spring Data REST: Configuration, Pagination and Sorting
+* Configuration: specify plural name/path with an annotation
+```
+@RepositoryRestResource(path = "members")
+public interface EmployeeRepository extends JpaRepository<Employee, Integer> {}
+```
+* url: http://localhost:8080/magic-app/members
+* Pagination: Spring Data Rest return 20 elements
+* To navigate to different page use query params
+```
+http://localhost:8080/employees?page=1
+```
+* Sorting: 
+```
+http://localhost:8080/employees?sort=lastName,desc
+```
