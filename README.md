@@ -1208,3 +1208,12 @@ public UserDetailsManager userDetailsManager(DataSource dataSource){
     return jdbcUserDetailsManager;
 }
 ```
+# Spring Boot MVC Thymeleaf
+* Thymeleaf is a Java templating engine
+* Used to generate HTML views for web apps
+* It is seperat progect separate to spring.io, you can create Java apps without Spring 
+* Template files go to /src/main/resources/templates
+* More info in www.thymeleaf.org
+
+
+```
