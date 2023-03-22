@@ -1173,3 +1173,15 @@ public class SecurityConfiguration {
 }
 ```
 * From postman use Basic Auth with the specified roles to do the actions
+## JDBC Authentication
+### Dev process
+* Add database support to pom file
+```
+@Bean
+public UserDetailsManager userDetailsManager(DataSource dataSource){
+    return new JdbcUserDetailsManager(dataSource);
+}
+```
+* Create JDBC properties
+* Update Spring Security configuration to use JDBC
+![JDBC](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/JDBC.png "JDBC")
