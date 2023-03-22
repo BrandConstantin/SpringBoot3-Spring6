@@ -1136,3 +1136,58 @@ public class SecurityConfiguration {
 }
 ```
 
+## Restrict access to roles
+![Restrict access](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/restrict-access.png "Restrict access")
+---------------------------------------------------------
+![Authorize Requests Roles](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/auth-request-role.png "Authorize Requests Roles")
+
+## Cross-Site Request Forgery CSRF
+* Protect agains attacks
+* Embed additional authentication data/token into HTML forms
+* Verify token before processing
+* Disabled CSRF ```http.csrf().disable();```
+```
+@Configuration
+public class SecurityConfiguration {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
+        httpSecurity.authorizeHttpRequests(configurer ->
+            configurer
+                    .requestMatchers(HttpMethod.GET,"/api/employees").hasRole("EMPLOYEE")
+                    .requestMatchers(HttpMethod.GET,"/api/employees/**").hasRole("EMPLOYEE")
+                    .requestMatchers(HttpMethod.POST,"/api/employees").hasRole("MANAGER")
+                    .requestMatchers(HttpMethod.PUT,"/api/employees").hasRole("MANAGER")
+                    .requestMatchers(HttpMethod.DELETE,"/api/employees/**").hasRole("ADMIN")
+        );
+
+        // use http basic authentication
+        httpSecurity.httpBasic();
+
+        // disabled CSRF
+        // in general is not required for post, put, delete or patch
+        httpSecurity.csrf().disable();
+        
+        return httpSecurity.build();
+
+    }
+}
+```
+* From postman use Basic Auth with the specified roles to do the actions
+## JDBC Authentication
+### Dev process
+* Add database support to pom file
+```
+@Bean
+public UserDetailsManager userDetailsManager(DataSource dataSource){
+    return new JdbcUserDetailsManager(dataSource);
+}
+```
+* Create JDBC properties
+* Update Spring Security configuration to use JDBC
+![JDBC](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/JDBC.png "JDBC")
+## Bcrypt
+![bcrypt](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/bcrypt.png "bcrypt")
+---------------------------------------------------------
+![Login Process](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/login-process.png "Login Process")
+
+
