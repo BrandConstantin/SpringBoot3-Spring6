@@ -1185,3 +1185,9 @@ public UserDetailsManager userDetailsManager(DataSource dataSource){
 * Create JDBC properties
 * Update Spring Security configuration to use JDBC
 ![JDBC](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/JDBC.png "JDBC")
+## Bcrypt
+![bcrypt](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/bcrypt.png "bcrypt")
+---------------------------------------------------------
+![Login Process](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/login-process.png "Login Process")
+
+
