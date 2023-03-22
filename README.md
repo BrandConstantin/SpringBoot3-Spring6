@@ -1,5 +1,6 @@
 # SpringBoot3-Spring6
 Learn Spring Boot 3 with Spring 6 and Hibernate
+Course: https://www.udemy.com/course/spring-hibernate-tutorial/
 
 ## Spring Boot Initialzr
 https://start.spring.io/
@@ -1190,4 +1191,20 @@ public UserDetailsManager userDetailsManager(DataSource dataSource){
 ---------------------------------------------------------
 ![Login Process](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/login-process.png "Login Process")
 
+## Custom tables
+* Create our custom table with sql
+* Update Spring Security configuration
+```
+@Bean
+public UserDetailsManager userDetailsManager(DataSource dataSource){
+    JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
 
+    // define query to retrieve a user by username
+    jdbcUserDetailsManager.setUsersByUsernameQuery("select user_id, pw, active from members where user_id = ?");
+
+    // define query to retrieve the roles by username
+    jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("select user_id, role from roles where user_id = ?");
+    
+    return jdbcUserDetailsManager;
+}
+```
