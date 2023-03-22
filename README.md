@@ -1103,3 +1103,36 @@ http://localhost:8080/employees?sort=lastName,desc
 spring.security.user.name=admin
 spring.security.user.password=test123
 ```
+## Basic Configuration
+* Password are stored in a specific format ```{id}encodePassword```
+* ```{noop}test123``` the password are stored as plain text
+* ```{bcrypt}test123``` the password are stored as encrypted password
+![Users and roles](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/users-and-roles.png "Users and roles")
+---------------------------------------------------------
+![Basic authentication](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/basic-auth.png "Basic authentication")
+```
+@Configuration
+public class SecurityConfiguration {
+    @Bean
+    public InMemoryUserDetailsManager userDetailsManager(){
+        UserDetails employee1 = User.builder()
+                .username("John")
+                .password("{noop}test123")
+                .roles("EMPLOYEE")
+                .build();
+        UserDetails employee2 = User.builder()
+                .username("Mary")
+                .password("{noop}test123")
+                .roles("EMPLOYEE", "MANAGER")
+                .build();
+        UserDetails employee3 = User.builder()
+                .username("Susan")
+                .password("{noop}test123")
+                .roles("EMPLOYEE","MANAGER","ADMIN")
+                .build();
+
+        return new InMemoryUserDetailsManager(employee1, employee2, employee3);
+    }
+}
+```
+
