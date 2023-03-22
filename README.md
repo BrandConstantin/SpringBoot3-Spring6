@@ -1089,3 +1089,17 @@ http://localhost:8080/employees?page=1
 ```
 http://localhost:8080/employees?sort=lastName,desc
 ```
+
+# Spring Boot - REST API Security
+* Edit pom file to add spring-boot-starter-security
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+```
+* Change user and password
+```
+spring.security.user.name=admin
+spring.security.user.password=test123
+```
