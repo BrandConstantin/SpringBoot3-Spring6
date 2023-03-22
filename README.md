@@ -1214,6 +1214,42 @@ public UserDetailsManager userDetailsManager(DataSource dataSource){
 * It is seperat progect separate to spring.io, you can create Java apps without Spring 
 * Template files go to /src/main/resources/templates
 * More info in www.thymeleaf.org
-
-
+### Dev process
+* Add Thymeleaf to pom file
 ```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+</dependency>
+```
+* Develop Spring MVC Controller
+```
+@Controller
+public class AppController {
+    @GetMapping("/hello")
+    public String sayHello(Model theModel){
+        theModel.addAttribute("theDate", new java.util.Date());
+
+        return "hello-world";
+    }
+}
+```
+* Add css and js file to the /resource/static directory
+* Create Thymeleaf template
+```
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!-- in the udemy course used -->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World</title>
+    <link rel="stylesheet" th:href="@{css/style.css}">
+</head>
+<body>
+<p th:text="'Time on the server is ' + ${theDate}" class="green-color"/>
+</body>
+</html>
+```
+* Result in the URL: http://127.0.0.1:8080/hello is "Time on the server is Wed Mar 22 22:25:29 CET 2023"
+
