@@ -1284,7 +1284,7 @@ public String saveEmployee(@ModelAttribute("employee") Employee theEmployee){
     <button type="submit" class="btn btn-info col-2">Save</button>
 </form>
 ```
-### For update to prepopulate the form
+### Dev process for update to prepopulate the form
 * Add button with the id
 ```
 <td><a th:href="@{/employees/showFormForUpdate(employeeId=${tempEmployee.id})}"
@@ -1303,4 +1303,21 @@ public String saveEmployee(@ModelAttribute("employee") Employee theEmployee){
         // send to form the data
         return "employees/employee-form";
     }
+```
+### Dev process for delete
+* The button
+```
+<a th:href="@{/employees/delete(employeeId=${tempEmployee.id})}"
+    class="btn btn-danger btn-sm">Update</a>
+```
+* The Controller
+```
+@GetMapping("/delete")
+public String deleteEmployee(@RequestParam("employeeId") int theId){
+    // delete
+    employeeService.deleteById(theId);
+
+    // redirect to list
+    return "redirect:/employees/list";
+}
 ```
