@@ -1284,3 +1284,23 @@ public String saveEmployee(@ModelAttribute("employee") Employee theEmployee){
     <button type="submit" class="btn btn-info col-2">Save</button>
 </form>
 ```
+### For update to prepopulate the form
+* Add button with the id
+```
+<td><a th:href="@{/employees/showFormForUpdate(employeeId=${tempEmployee.id})}"
+    class="btn btn-info btn-sm">Update</a></td>
+```
+* Populate the form
+```
+    @GetMapping("/showFormForUpdate")
+    public String showFormForUpdate(@RequestParam("employeeId") int theId, Model theModel){
+        // get employee from service
+        Employee theEmployee = employeeService.findById(theId);
+
+        // set employee in the model to populate the form
+        theModel.addAttribute("employee", theEmployee);
+
+        // send to form the data
+        return "employees/employee-form";
+    }
+```
