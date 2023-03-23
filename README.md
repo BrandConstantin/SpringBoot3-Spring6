@@ -1257,3 +1257,30 @@ public class AppController {
 </html>
 ```
 * Result in the URL: http://127.0.0.1:8080/hello is "Time on the server is Wed Mar 22 22:25:29 CET 2023"
+
+# Spring Boot MVC CRUD
+* Add button to 'add'
+```
+<a th:href="@{/employees/showFormForAdd}" class="btn btn-primary btn-sm mb-3">Add Employee</a>
+```
+* Add controller
+```
+@PostMapping("/save")
+public String saveEmployee(@ModelAttribute("employee") Employee theEmployee){
+    // save
+    employeeService.save(theEmployee);
+    
+    // use a redirect to prevent duplicate submision
+    return "redirect:/employees/list";
+}
+```
+* Create the form 
+```
+<form action="#" th:action="@{/employees/save}" th:object="@{employee}" method="POST">
+    <input type="text" th:field="*{firstName}" class="form-control mb-4 w-25" placeholder="First name">
+    <input type="text" th:field="*{lastName}" class="form-control mb-4 w-25" placeholder="Last name">
+    <input type="text" th:field="*{email}" class="form-control mb-4 w-25" placeholder="Email">
+    
+    <button type="submit" class="btn btn-info col-2">Save</button>
+</form>
+```
