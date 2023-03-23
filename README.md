@@ -140,6 +140,11 @@ management.endpoints.web.exposure.exclude=health,info
 * @ManyToOne
 * @ManyToMany    
 
+### Difference between @Controller and @RestController
+* @Controller is used to declare common web controllers which can return HTTP response but @RestController is used to create controllers for REST APIs which can return JSON.
+* @RestController = @Controller + @RequestBody
+* The @Controller is a common annotation which is used to mark a class as Spring MVC Controller while the @RestController is a special controller used in RESTFul web services
+
 ## Injecting custom application properties
 * By default is located in src/main/resources/application.properties
 * With @Value annotation we can define a custom properties
