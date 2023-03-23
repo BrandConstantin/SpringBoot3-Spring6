@@ -1252,4 +1252,3 @@ public class AppController {
 </html>
 ```
 * Result in the URL: http://127.0.0.1:8080/hello is "Time on the server is Wed Mar 22 22:25:29 CET 2023"
-
