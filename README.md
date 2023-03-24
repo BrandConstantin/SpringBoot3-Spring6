@@ -1321,3 +1321,244 @@ public String deleteEmployee(@RequestParam("employeeId") int theId){
     return "redirect:/employees/list";
 }
 ```
+# Spring MVC Form Validation
+* Java has a standard Bean Validation API
+* http://www.beanvalidation.org
+* Spring v4 to up, support Bean Validation API 
+![Validation annotations](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/validation-form.png "Validation annotations")
+---------------------------------------------------------
+* Hibernate have a validator very usefull http://hibernate.org/validator
+* All the packages are renamed from javax.* to jakarta.* 
+* Hibernate Validator 7 is based in Jakarta EE 9, but Spring 5 is still based in Java EE (javax.*), so Spring 5 and Hibernate Validator 7 are not compatible. We need to use Hibernate Validator 6.2 https://hibernate.org/validator/releases/6.2/
+* When finished the comprimited file we copy the 3 files that are in the dist directory to the WEB-INF >> lib >> and from lib >> requiered subdirectory copy all the jar files
+### Form Tags
+* Form tags generate HTML for you:
+	* form:form
+	* form:input
+	* form:textarea
+	* form:checkbox
+	* form:radiobutton
+	* form:select
+	* etc
+* Create the controller
+```
+@Controller
+@RequestMapping("/student")
+public class StudentController {
+	
+	@RequestMapping("/showForm")
+	public String showForm(Model theModel) {
+		// create a student object
+		Student theStudent = new Student();
+		
+		// add student object to the model
+		theModel.addAttribute("student", theStudent);
+		
+		return "student-form";
+	}
+}
+```
+* To reference need to specify the spring namespace at beginning of JSP file
+```
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+```
+* You must add a model attribute, this is a bean that will hold form data for the data binding
+```
+	@RequestMapping("/processForm")
+	public String processForm(@ModelAttribute("student") Student theStudent) {
+		return "student-confirmation";
+	}
+```
+* Setting the form
+```
+	<form:form action="processForm" modelAttribute="student">
+		Fist name <form:input path="firstName"/>
+		Second name <form:input path="lastName"/>
+		<br><br>
+		Country:
+		<form:select path="country">
+			<form:options items="${countryOptions}"/>
+		</form:select>
+		<br><br>
+		Favorite language:
+		<form:radiobuttons path="language" items="${student.languageOptions}"/>
+		<br><br>
+		OS:
+		Linux<form:checkbox path="os" value="Linux"/>
+		Mac<form:checkbox path="os" value="Mac"/>
+		<br><br>
+		<input type="submit" value="Submit" />
+	</form:form>
+```
+* A simple way to create a form
+```
+Java <form:radiobutton path="language" value="Java"/>
+Python <form:radiobutton path="language" value="Python"/>
+JavaScript <form:radiobutton path="language" value="JavaScript"/>
+PHP <form:radiobutton path="language" value="PHP"/>
+
+<form:select path="country">
+	<form:option value="Romania">Romania</form:option>
+	<form:option value="Spain">Spain</form:option>
+	<form:option value="Germany">Germany</form:option>
+	<form:option value="Austria">Austria</form:option>
+</form:select>
+```
+#### Development process
+* Add validation rule to class
+```
+public class Professor {
+	@NotNull(message="Name is required")
+	@Size(min=4, message="Name most have more than 4 caracters")
+	private String firstName;
+	@Min(value=1, message="Must be gratear than or equal to 1")
+	@Max(value=10, message="Must be less than or igual to 10")
+	private int cualification;
+	@Pattern(regexp="^[a-zA-Z0-9]{5}", message="Only 5 chars/digits")
+	private String postalCode;
+}
+```
+* Display error messages on HTML form
+```
+	<form:form action="processForm" modelAttribute="professor" >
+		First name(*):
+		<form:input placeholder="What's your name?" path="firstName" />
+		<form:errors path="firstName" cssClass="error"/>
+		Last name(*):
+		<form:input placeholder="What's your surname?" path="lastName"/>
+		<form:errors path="lastName" cssClass="error"/>
+		<br><br>
+		Cualification:
+		<form:input path="cualification"/>
+		<form:errors path="cualification" cssClass="error"/>
+		<br><br>
+		Postal Code:
+		<form:input path="postalCode"/>
+		<form:errors path="postalCode" cssClass="error"/>
+		<br><br>
+		Course Code:
+		<form:input path="courseCode"/>
+		<form:errors path="courseCode" cssClass="error"/>
+		<br><br>
+		<input type="submit" value="Submit"/>
+	</form:form>
+```
+* Perform validation in controller
+```
+@Controller
+@RequestMapping("/student")
+public class StudentController {
+	@RequestMapping("/showForm")
+	public String showForm(Model theModel) {
+		// create a student object
+		Student theStudent = new Student();
+		
+		// add student object to the model
+		theModel.addAttribute("student", theStudent);
+		
+		return "student-form";
+	}
+}
+```
+* Update confirmation page
+```
+@RequestMapping("/processForm")
+public String processForm(@Valid @ModelAttribute("student") Student theStudent, BindingResult theBindingRes) {
+    if(!theBindingRes.hasErrors()) {
+        return "student-confirmation";
+    }else {
+        return "student-form";
+    }
+    
+}
+```
+* Update confirmation page
+* Add @InitBinder to eliminate white space from inputs
+```
+	@InitBinder
+	public void initBinder(WebDataBinder dataBinder) {
+		StringTrimmerEditor stringTrimm = new StringTrimmerEditor(true);
+		dataBinder.registerCustomEditor(String.class, stringTrimm);
+	}
+```
+```
+<h1>Student confirmation</h1>
+<p>The student is ${student.firstName} ${student.lastName}</p>
+<p>The student country is ${student.country}</p>
+<p>The student like ${student.language} and operating with: </p>
+<ul>
+    <c:forEach var="temp" items="${student.os}">
+        <li>${temp}</li>
+    </c:forEach>
+</ul>
+```
+* To eliminate white spaces in the input forms
+```
+@InitBinder
+public void initBinder(WebDataBinder dataBinder) {
+    StringTrimmerEditor stringTrimm = new StringTrimmerEditor(true);
+    dataBinder.registerCustomEditor(String.class, stringTrimm);
+}
+```
+### Handle String input for integer fields
+* Create custom error message in src >> resources >> messages.properties
+```
+typeMismatch.professor.cualification=Invalid number
+```
+* Load custom messages resource in Spring config file:
+```
+WebContent/WEB-INF/spring-mvc-demo-servlet.xml
+
+	<bean id="messageSource" 
+		class="org.springframework.context.support.ResourceBundleMessageSource" >
+		<property name="basenames" value="resources/messages" />
+	</bean>
+```
+### Create custom Annotation
+* Create a new package with a new annotation, the custom validation rule
+```
+@Constraint(validatedBy = CourseCodeConstraintValidator.class)
+@Target({ElementType.METHOD, ElementType.FIELD})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface CourseCode {
+	// define default course code
+	public String value() default "BRIND";
+	
+	// define default error message
+	public String message() default "Must start with a secret code";
+	
+	// defain default groups
+	public Class<?>[] groups() default {};
+	
+	// defain default payloads
+	public Class<? extends Payload>[] payload() default {};
+}
+```
+* Create the validator
+```
+public class CourseCodeConstraintValidator implements ConstraintValidator<CourseCode, String> {
+	private String coursePrefix;
+	
+	@Override
+	public void initialize(CourseCode constraintAnnotation) {
+		coursePrefix = constraintAnnotation.value();
+	}
+	
+	@Override
+	public boolean isValid(String theCode, ConstraintValidatorContext theConstraint) {
+		boolean result = false;
+		if(theCode != null) {
+			theCode.startsWith(coursePrefix);
+		}else {
+			result = true;
+		}
+		return result;
+	}
+}
+```
+* Add the validation rules 
+```
+	@CourseCode
+	private String courseCode;
+```
+* Display the errors in html 
