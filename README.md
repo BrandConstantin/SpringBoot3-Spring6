@@ -1578,3 +1578,14 @@ public class CourseCodeConstraintValidator implements ConstraintValidator<Course
 @JoinColumn(name="instructor_detail_id")
 private InstructorDetail instructorDetail;
 ```
+* @OneToOne - bidirectional
+```
+@OneToOne(mappedBy="instructorDetail", cascade=CascadeType.ALL)
+private Instructor instructor;
+```
+![OneToOne-bidirectional](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/OneToOne-bidirectional.png "OneToOne-bidirectional")
+* Delete details but not the instructor
+```
+@OneToOne(mappedBy="instructorDetail", cascade= {CascadeType.DETACH, CascadeType.MERGE,
+                                        CascadeType.PERSIST, CascadeType.REFRESH})
+```
