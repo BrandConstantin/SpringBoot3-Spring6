@@ -1589,3 +1589,18 @@ private Instructor instructor;
 @OneToOne(mappedBy="instructorDetail", cascade= {CascadeType.DETACH, CascadeType.MERGE,
                                         CascadeType.PERSIST, CascadeType.REFRESH})
 ```
+* @OneToMany - use to relation a column from a table with the many foreign key from another table
+```
+@OneToMany(fetch=FetchType.EAGER, mappedBy="instructor")
+private List<Course> courses;
+
+public void add(Course tempCourse) {
+    if(courses == null) {
+        courses = new ArrayList<>();
+    }
+    
+    courses.add(tempCourse);
+    tempCourse.setInstructor(this);
+    
+}
+```
