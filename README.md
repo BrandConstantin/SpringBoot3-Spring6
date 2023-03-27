@@ -1562,3 +1562,19 @@ public class CourseCodeConstraintValidator implements ConstraintValidator<Course
 	private String courseCode;
 ```
 * Display the errors in html 
+
+
+# Hibernate advanced mapping
+### Entity lifecycle
+![Entity lifecycle](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/entity-lifecycle.png "Entity lifecycle")
+---------------------------------------------------------
+![Session method calls](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/session-method-calls.png "Session method calls")
+---------------------------------------------------------
+![Cascade-Type](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Cascade-Type.png "Cascade-Type")
+
+* @OneToOne - use to relation a column from a table with the foreign key from another table
+```
+@OneToOne(cascade=CascadeType.ALL)
+@JoinColumn(name="instructor_detail_id")
+private InstructorDetail instructorDetail;
+```
