@@ -1639,3 +1639,9 @@ public void add(Course tempCourse) {
     
     session.close();
 ```
+* @OneToMany
+```
+@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+@JoinColumn(name="course_id")
+private List<Review> reviews;
+```
