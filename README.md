@@ -1656,3 +1656,13 @@ private List<Review> reviews;
         inverseJoinColumns = @JoinColumn(name="student_id"))
 private List<Student> students;
 ```
+# Create a Dynamic Web Project with Eclipse
+### Dev environment:
+* You should have installed: apache tomcat, eclipse java EE version, and connect eclipse to tomacat
+### Spring MVC configuration process:
+* create new Dynamic Web Project in Eclipse
+	* remove the source folder (src/main/java) and add the folder src
+	* remove the content directory (src/main/webapp) and add the folder WebContent and finish
+    * add JDBC driver
+    * Create new Servlet to test the connection
+    * uncheck and let only 'Inherited abstract methods' and 'doGet'
