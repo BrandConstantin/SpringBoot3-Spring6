@@ -115,7 +115,8 @@ management.endpoints.web.exposure.exclude=health,info
 * @Autowired - allow injecting as a bean after a constructor, method or attribute is created
 * @Qualifier - when there are one or more beans created and you want to use one of them, use this annotation together with @Autowired to specify which bean to use
 * @Primary - to identify the principal bean, it is an alternative to @Qualifier
-* @Lazy bean is only initialized if needed for dependency injection
+* @Lazy - bean is only initialized if needed for dependency injection
+* @Eager - is allwais initialized
 * @Scope - specifies the scope of the bean
 * @PostConstruct - to execute code during bean initialization
 * @PreDestroy - to execute code during bean destruction
@@ -1603,4 +1604,38 @@ public void add(Course tempCourse) {
     tempCourse.setInstructor(this);
     
 }
+```
+## Eager vs Lazy loading
+* eager will retrive everything
+* lazy will retrive on request
+* only load data when absolutely needes, so prefer lazy loading instead of eager loading
+![Eager Loading](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/eager-loading.PNG "Eager Loading")
+* The best practice is load data when absolutely needed, prefer use lazy loading
+* How resolve the Lazy loading
+    * use hibernate query with HQL
+```
+    // start a transaction
+    session.beginTransaction();
+    
+    // resolve lazy loading
+    // option 2 hibernate query with HQL
+    
+    // get the instructor from db
+    int theId = 1;
+    Query<Instructor> query = session.createQuery("select i from Instructor i " +
+            " JOIN FETCH i.courses " + 
+            " where i.id=:theInstructorId",Instructor.class);
+    
+    query.setParameter("theInstructorId", theId);
+    
+    // execute query and get the instructor
+    Instructor tempInstructor = query.getSingleResult();
+    
+    // get courses of the instructor
+    System.out.println("Courses: " + tempInstructor);
+    
+    // commit transaction
+    session.getTransaction().commit();
+    
+    session.close();
 ```
