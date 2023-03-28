@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1912e25-d95c-406c-93a7-d52db015fce9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../04-Spring Injection &amp; Inversion Of Control/02-SpringInjection-Qualifier/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="0f78804b-efbc-4424-8d54-b3d814a8a017" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/04-Spring Injection &amp; Inversion Of Control/02-SpringInjection-Qualifier/.idea/workspace.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,9 +10,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="2Nad5SEyMZeHAVP2CRjKD02TFMC" />
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2NeDBR8OZXMJDNk9tncyxKiWpVD" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -26,20 +25,20 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "last_opened_file_path": "C:/Users/cBrindus/git/SpringBoot3-Spring6/12-Hibernate-Advanced-Mapping/00-SpringBoot-AdvancedHibernate-start",
-    "project.structure.last.edited": "Global Libraries",
+    "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.keymap"
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "configurable.group.appearance"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b1912e25-d95c-406c-93a7-d52db015fce9" name="Changes" comment="" />
-      <created>1679905943409</created>
+      <changelist id="0f78804b-efbc-4424-8d54-b3d814a8a017" name="Changes" comment="" />
+      <created>1680015528593</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1679905943409</updated>
+      <updated>1680015528593</updated>
     </task>
     <servers />
   </component>
