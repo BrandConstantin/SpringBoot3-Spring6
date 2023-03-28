@@ -1666,5 +1666,46 @@ private List<Student> students;
     * add JDBC driver
     * Create new Servlet to test the connection
     * uncheck and let only 'Inherited abstract methods' and 'doGet'
+* Define database dataSource / connection pool
+```
+<bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+        destroy-method="close">
+    <property name="driverClass" value="com.mysql.cj.jdbc.Driver" />
+    <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/web_customer_tracker?useSSL=false&amp;serverTimezone=UTC" />
+    <property name="user" value="springstudent" />
+    <property name="password" value="springstudent" /> 
 
- 
+    <!-- these are connection pool properties for C3P0 -->
+    <property name="initialPoolSize" value="5"/>
+    <property name="minPoolSize" value="5" />
+    <property name="maxPoolSize" value="20" />
+    <property name="maxIdleTime" value="30000" />
+</bean>  
+```
+* Setup hibernate session factory
+```
+<bean id="sessionFactory"
+    class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+    <property name="dataSource" ref="myDataSource" />
+    <property name="packagesToScan" value="com.luv2code.springdemo.entity" />
+    <property name="hibernateProperties">
+        <props>
+            <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+            <prop key="hibernate.show_sql">true</prop>
+        </props>
+    </property>
+</bean>	
+```    
+---------------------------------------------------------
+```
+<!-- Step 3: Setup Hibernate transaction manager -->
+<bean id="myTransactionManager"
+        class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+    <property name="sessionFactory" ref="sessionFactory"/>
+</bean>
+
+<!-- Step 4: Enable configuration of transactional behavior based on annotations -->
+<tx:annotation-driven transaction-manager="myTransactionManager" />
+```
+
+
