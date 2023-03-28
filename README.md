@@ -1645,3 +1645,14 @@ public void add(Course tempCourse) {
 @JoinColumn(name="course_id")
 private List<Review> reviews;
 ```
+@ManyToMany
+* @ManyToMany use @JoinTable and @JoinColumn
+```
+@ManyToMany(fetch = FetchType.LAZY,
+        cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+        CascadeType.DETACH, CascadeType.REFRESH})
+@JoinTable(name="course_student",
+        joinColumns = @JoinColumn(name="course_id"),
+        inverseJoinColumns = @JoinColumn(name="student_id"))
+private List<Student> students;
+```
