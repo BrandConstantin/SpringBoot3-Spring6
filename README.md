@@ -128,7 +128,7 @@ management.endpoints.web.exposure.exclude=health,info
 * @RequestParam - get a parameter from the request
 * @InitBinder - processes requests to the controller
 * @Entity - to map a table from the database
-* @Transactional - is an annotation to begin and the end of a transaction in in JPA code, is no need to implement because Spring do it behind the scenes
+* @Transactional - is an annotation to begin and end a transaction in in JPA code, is no need to implement because Spring do it behind the scenes
 * @Repository - is use for the DAOs
 * @RestController - is use in the REST application, is the sum of @Controller and @ResponseBody
 * @ControllerAdvice - is a filter used to controller all the global exception handlings
@@ -1666,46 +1666,35 @@ private List<Student> students;
     * add JDBC driver
     * Create new Servlet to test the connection
     * uncheck and let only 'Inherited abstract methods' and 'doGet'
-* Define database dataSource / connection pool
-```
-<bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-        destroy-method="close">
-    <property name="driverClass" value="com.mysql.cj.jdbc.Driver" />
-    <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/web_customer_tracker?useSSL=false&amp;serverTimezone=UTC" />
-    <property name="user" value="springstudent" />
-    <property name="password" value="springstudent" /> 
-
-    <!-- these are connection pool properties for C3P0 -->
-    <property name="initialPoolSize" value="5"/>
-    <property name="minPoolSize" value="5" />
-    <property name="maxPoolSize" value="20" />
-    <property name="maxIdleTime" value="30000" />
-</bean>  
-```
-* Setup hibernate session factory
-```
-<bean id="sessionFactory"
-    class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-    <property name="dataSource" ref="myDataSource" />
-    <property name="packagesToScan" value="com.luv2code.springdemo.entity" />
-    <property name="hibernateProperties">
-        <props>
-            <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-            <prop key="hibernate.show_sql">true</prop>
-        </props>
-    </property>
-</bean>	
-```    
+* To work propertily in right click to project > Properties 
+    * > Targeted Runtime > select the server
+    * > Java Build Path > click to Classpath > add JARs > select all the jars from lib directory
+    * Check if the web.xml and spring-mvc-servlet.xml are the same package 
+ ![web.xml](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/web-xml.PNG "web.xml")
 ---------------------------------------------------------
+ ![servlet](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/servlet.PNG "servlet")
+ * If project open other project lock for server.xml in server apache and modify 'Context'
+
+# Spring MVC & Hibernate
+ ![DAO implementation](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/dao-implementation.PNG "DAO implementation")
+ ---------------------------------------------------------
+* Spring provide @Transactional annotation
+* @Transactional begin and end a transaction in Hibernate
+* Begin > session.beginTransaction() and End > session.getTransaction().commit() is replaced with @Transactional
+![Transactional](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/transactional.PNG "Transactional")
+* Spring provide @Repository annotation
+![Repository](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/repository.PNG "Repository")
+* Is applied to DAO implementation. Spring also provide translation of any JDBC related exceptions
 ```
-<!-- Step 3: Setup Hibernate transaction manager -->
-<bean id="myTransactionManager"
-        class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-    <property name="sessionFactory" ref="sessionFactory"/>
-</bean>
-
-<!-- Step 4: Enable configuration of transactional behavior based on annotations -->
-<tx:annotation-driven transaction-manager="myTransactionManager" />
+@Repository
+public class CustomerDAOImpl implements CustomerDAO {
+	@Autowired
+	private SessionFactory sessionFactory;
+	
+	@Override
+	@Transactional
+	public List<Customer> getCustomers() {
+        ...
+	}
+}
 ```
-
-
