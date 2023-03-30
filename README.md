@@ -140,6 +140,10 @@ management.endpoints.web.exposure.exclude=health,info
 * @OneToMany
 * @ManyToOne
 * @ManyToMany    
+* @PostMapping
+* @GetMapping
+* @PutMapping
+* @DeleteMapping
 
 ### Difference between @Controller and @RestController
 * @Controller is used to declare common web controllers which can return HTTP response but @RestController is used to create controllers for REST APIs which can return JSON.
@@ -1697,4 +1701,14 @@ public class CustomerDAOImpl implements CustomerDAO {
         ...
 	}
 }
+```
+* When use @Transactional in DAO and when in Service?
+```
+Here is the general guidance (of course it may vary for specific use cases / app requirements)
+
+If you are using the single database/datasource
+- If you want to manage transaction rollback across multiple DAOs, place @Transactional at Service layer
+
+If you are using multiple databases/datasources
+- Place @Transactional on DAO layer
 ```

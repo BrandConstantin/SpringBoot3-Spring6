@@ -5,23 +5,28 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.crm.web.app.dao.customer.CustomerDAO;
 import com.crm.web.app.entity.Customer;
+import com.crm.web.app.service.CustomerService;
+import com.mysql.cj.xdevapi.SessionFactory;
 
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
 	// inject the dao
+	// with the service inject the dao in not long necesary
+	/*@Autowired
+	private CustomerDAO customerDao;*/
+	
 	@Autowired
-	private CustomerDAO customerDao;
+	private CustomerService customerService;
 	
-	
-	@RequestMapping("/list")
+	@GetMapping("/list")
 	public String listCustomers(Model theModel) {
 		// get customers from dao
-		List<Customer> theCustomers = customerDao.getCustomers();
+		List<Customer> theCustomers = customerService.getCustomers();
 		
 		// add customers to the model
 		theModel.addAttribute("customers", theCustomers);
@@ -88,13 +93,3 @@ public class CustomerController {
 		return "redirect:/customer/list";
 	}*/
 }
-
-
-
-
-
-
-
-
-
-
