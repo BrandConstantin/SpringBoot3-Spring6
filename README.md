@@ -1712,5 +1712,15 @@ If you are using the single database/datasource
 If you are using multiple databases/datasources
 - Place @Transactional on DAO layer
 ```
-* Sending a POST form
+* POST
 ![POST](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/POST.PNG "POST")
+* UPDATE
+* Define a variable
+```
+<c:url var="updateLink" value="/customer/showFormForUpdate">
+    <c:param name="customerId" value="${tempCustomer.id}" />
+</c:url>	
+...
+<a href="${updateLink}">Update</a>
+```
+![update](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/update.PNG "update")
