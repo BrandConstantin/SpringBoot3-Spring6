@@ -1712,3 +1712,5 @@ If you are using the single database/datasource
 If you are using multiple databases/datasources
 - Place @Transactional on DAO layer
 ```
+* Sending a POST form
+![POST](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/POST.PNG "POST")
