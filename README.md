@@ -1613,7 +1613,7 @@ public void add(Course tempCourse) {
 * eager will retrive everything
 * lazy will retrive on request
 * only load data when absolutely needes, so prefer lazy loading instead of eager loading
-![Eager Loading](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/eager-loading.PNG "Eager Loading")
+![Eager Loading](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/eager-loading.png "Eager Loading")
 * The best practice is load data when absolutely needed, prefer use lazy loading
 * How resolve the Lazy loading
     * use hibernate query with HQL
@@ -1674,20 +1674,20 @@ private List<Student> students;
     * > Targeted Runtime > select the server
     * > Java Build Path > click to Classpath > add JARs > select all the jars from lib directory
     * Check if the web.xml and spring-mvc-servlet.xml are the same package 
- ![web.xml](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/web-xml.PNG "web.xml")
+ ![web.xml](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/web-xml.png "web.xml")
 ---------------------------------------------------------
- ![servlet](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/servlet.PNG "servlet")
+ ![servlet](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/servlet.png "servlet")
  * If project open other project lock for server.xml in server apache and modify 'Context'
 
 # Spring MVC & Hibernate
- ![DAO implementation](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/dao-implementation.PNG "DAO implementation")
+ ![DAO implementation](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/dao-implementation.png "DAO implementation")
  ---------------------------------------------------------
 * Spring provide @Transactional annotation
 * @Transactional begin and end a transaction in Hibernate
 * Begin > session.beginTransaction() and End > session.getTransaction().commit() is replaced with @Transactional
-![Transactional](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/transactional.PNG "Transactional")
+![Transactional](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/transactional.png "Transactional")
 * Spring provide @Repository annotation
-![Repository](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/repository.PNG "Repository")
+![Repository](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/repository.png "Repository")
 * Is applied to DAO implementation. Spring also provide translation of any JDBC related exceptions
 ```
 @Repository
@@ -1713,7 +1713,7 @@ If you are using multiple databases/datasources
 - Place @Transactional on DAO layer
 ```
 * POST
-![POST](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/POST.PNG "POST")
+![POST](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/POST.png "POST")
 * UPDATE
 * Define a variable
 ```
@@ -1723,7 +1723,7 @@ If you are using multiple databases/datasources
 ...
 <a href="${updateLink}">Update</a>
 ```
-![update](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/update.PNG "update")
+![update](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/update.png "update")
 ```
 <c:url var="deleteLink" value="/customer/delete">
     <c:param name="customerId" value="${tempCustomer.id}" />
@@ -1731,5 +1731,5 @@ If you are using multiple databases/datasources
 ...
 <a href="${deleteLink}" onclick="if (!(confirm('Are you sure you want to delete this customer?'))) return false">Delete</a>
 ```
-![delete](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/delete.PNG "delete")
+![delete](https://github.com/BrandConstantin/Spring-Hibernate/blob/main/images/delete.png "delete")
 
