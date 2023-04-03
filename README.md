@@ -109,7 +109,7 @@ management.endpoints.web.exposure.exclude=health,info
     * java -jar
     * mvnw spring-boot:run
 
-## Anotaciones:
+## Annotations:
 * @Override - override the method from the principal class
 * @Component - mark a class like a spring bean and make the bean available for dependency injection
 * @Autowired - allow injecting as a bean after a constructor, method or attribute is created
@@ -144,6 +144,7 @@ management.endpoints.web.exposure.exclude=health,info
 * @GetMapping
 * @PutMapping
 * @DeleteMapping
+* @Before - 
 
 ### Difference between @Controller and @RestController
 * @Controller is used to declare common web controllers which can return HTTP response but @RestController is used to create controllers for REST APIs which can return JSON.
@@ -1733,3 +1734,30 @@ If you are using multiple databases/datasources
 ```
 ![delete](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/delete.png "delete")
 
+# AOP (Aspect oriented programming)
+* AOP use cases:
+ * most common: logging, security, transactions
+ * audit logging: who, what, when, where
+ * exeption handling: log exception and notify DevOps teams via SMS/EMAIL
+ * API management: how many times has a method been called user, what are peak times?, what is avafege load? etc
+![AOP](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/AOP.png "AOP")
+* Terminology:
+![Terminology AOP](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Terminology_AOP.png "Terminology AOP")
+* Advice Type
+![Advice Types](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Advice_Types.png "Advice Types")
+* Exists two AOP frameworks for Java
+ * Spring AOP:
+    * support of Spring
+    * key component: security, transactions, caching
+ * AspectJ: 
+    * privide complete support for AOP
+    * join points: method-level, constructor, field
+    * code weaving: compile-time, post compile-time and load-time
+* Comparasion:
+![Comparasion AOP](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Comparasion_AOP.png "Comparasion AOP")
+ ---------------------------------------------------------
+ ![Comparasion AspectJ](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Comparasion_AspectJ.png "Comparasion AspectJ")
+ * Spring AOP it's slower than AspectJ
+ * Spring AOP is a light implementation of AOP, it easy to get started and when have complex requirements then move to AspectJ
+ * Download AspectJ from https://mvnrepository.com/artifact/org.aspectj/aspectjweaver
+ 
