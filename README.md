@@ -1813,3 +1813,46 @@ public class LogginAspect {
 	}
 }
  ```
+## Pointcut Expression
+* Pointcut: a predicate expression for where advice should be applied
+```
+execution(modifiers-pattern? return-type-pattern declaring-type-pattern? method-name-pattern(param-pattern) throws-pattern?)
+```
+ * Modifiers: Spring AOP only supports public
+ * Return type: void, Boolean, String
+ * Declaring type: the class name
+ * Method name pattern
+ * Params
+ * Exceptions
+![Pointcut Expression](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/pointcut-expression.png "Pointcut Expression")
+* Match methods starting with add in any class
+```
+@Before("execution(public void add*())")
+...
+@Before("execution(public VerificationResult processCreditCard*())")
+...
+@Before("execution(public * processCreditCard*())")
+```
+* Modifier is optional
+```
+@Before("execution(* processCreditCard*())")
+```
+* For the full class name, if whe have more than one method with the same name
+```
+@Before("execution(public void com.spring.aop.dao.AccountDAO.addAccount())")
+public void beforeAddAcountAdvice() { }
+```
+* Parameter pattern wildcards
+    * () - matches a method with no arguments
+    * (*) - matches a method with one argument of any type
+    * (..) - matches a method with zero or more arguments of any types
+```
+@Before("execution(* addAccount(com.spring.aop.dao.Account))")
+...
+@Before("execution(* addAccount(..))")
+...
+@Before("execution(* com.spring.aop.dao.*.*(..))")
+```
+![Pointcut Expression 2](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/pointcut-expression2.png "Pointcut Expression 2")
+
+
