@@ -1760,4 +1760,56 @@ If you are using multiple databases/datasources
  * Spring AOP it's slower than AspectJ
  * Spring AOP is a light implementation of AOP, it easy to get started and when have complex requirements then move to AspectJ
  * Download AspectJ from https://mvnrepository.com/artifact/org.aspectj/aspectjweaver
- 
+
+## @Before
+ ### Dev process
+ * Create target object
+ ```
+ @Component
+public class AccountDAO { }
+ ```
+ * Create Spring java config
+ ```
+@Configuration						// Spring pure java configuration
+@EnableAspectJAutoProxy				// Spring AOP proxy support
+@ComponentScan("com.spring.aop")	// Component scan for components and aspects
+public class DemoConfig { }
+ ```
+ * Main
+```
+public class MainApp {
+
+	public static void main(String[] args) {
+		// read spring config java class
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DemoConfig.class);
+		
+		// get the bean from spring container
+		AccountDAO theAccountDAO = context.getBean("accountDAO", AccountDAO.class);
+		
+		// call the business method
+		theAccountDAO.addAccount();
+		
+		// call business method again
+		System.out.println("Do it again!");
+		theAccountDAO.addAccount();
+		
+		// close the context
+		context.close();
+	}		
+
+}
+```
+ * Create Aspect with @Before
+ ```
+@Aspect
+@Component
+public class LogginAspect {
+	// add advice for loggin
+	// start with @Before advice
+	
+	@Before("execution(public void addAccount())")
+	public void beforeAddAcountAdvice() {
+		System.out.println(">>>>>> @Before advice on addAcount()");
+	}
+}
+ ```
