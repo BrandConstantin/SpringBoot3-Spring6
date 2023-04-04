@@ -1855,4 +1855,21 @@ public void beforeAddAcountAdvice() { }
 ```
 ![Pointcut Expression 2](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/pointcut-expression2.png "Pointcut Expression 2")
 
+## How can reuse a pointcut expression?
+![Not ideal pointcut expression](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/no-ideal-pointcut-expression.png "Not ideal pointcut expression")
+ ---------------------------------------------------------
+* The ideal solution is create a pointcut declaration and apply it
+    * Declaration
+![Ideal pointcut expression](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/ideal-pointcut-expression.png "Ideal pointcut expression")
+    * Apply
+![Apply pointcut expression](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Apply-pointcut-expression.png "Apply pointcut expression")
+```
+// pointcut declaration
+@Pointcut("execution(* com.spring.aop.*.*(..))")
+private void personalPointcutDeclaration() {}
 
+@Before("personalPointcutDeclaration()")
+public void beforeAddAcountAdvice() {
+    System.out.println(">>>>>> @Before advice on addAcount()");
+}
+```
