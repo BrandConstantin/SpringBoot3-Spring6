@@ -1873,3 +1873,12 @@ public void beforeAddAcountAdvice() {
     System.out.println(">>>>>> @Before advice on addAcount()");
 }
 ```
+## Combining pointcuts
+* You cas use operators
+```
+@Before("express1ionOne() && expressionTwo()")
+...
+@Before("express1ionOne() || expressionTwo()")
+...
+@Before("express1ionOne() && !expressionTwo()")
+```
