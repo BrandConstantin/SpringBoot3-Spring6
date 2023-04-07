@@ -1978,3 +1978,29 @@ public void afterFinallyFindAccountsAdvice(JoinPoint theJoinPoint) {
     System.out.println("After >>>>> " + theJoinPoint);
 }
 ```
+
+## @Around
+* Uses:
+    * most common: logging, auditing, security
+    * pre-processing and post-processing data
+    * instrumentation/profiling code: how long does it take for a section of code tu run?
+    * managing exceptions: swallow/handle/stop exception
+```
+@Around("execution(* com.spring.aop.service.*.getTraffic(..))")
+public Object aroundGetTraffic(ProceedingJoinPoint theProceedingJoinPoint) throws Throwable {    
+    // get begin timestamp
+    long begin = System.currentTimeMillis();
+    
+    // execute the method
+    Object result = theProceedingJoinPoint.proceed();
+    
+    // end of timestamp
+    long end = System.currentTimeMillis();
+    
+    // compute duration 
+    long duration = end - begin;
+    myLogger.info("Duration: " + duration / 1000.0 + " seconds");
+    
+    return result;
+}
+```
