@@ -144,7 +144,9 @@ management.endpoints.web.exposure.exclude=health,info
 * @GetMapping
 * @PutMapping
 * @DeleteMapping
-* @Before - 
+* @Pointcuts - to create pointcuts
+* @Before - use a pointcuts
+* @Order - order the pointcuts
 
 ### Difference between @Controller and @RestController
 * @Controller is used to declare common web controllers which can return HTTP response but @RestController is used to create controllers for REST APIs which can return JSON.
@@ -1881,4 +1883,43 @@ public void beforeAddAcountAdvice() {
 @Before("express1ionOne() || expressionTwo()")
 ...
 @Before("express1ionOne() && !expressionTwo()")
+```
+## Ordering Aspects
+* Refactor code in separate the aspects
+![Separate Aspects](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/separate-aspects.png "Separate Aspects")
+* Use @Order annotations
+```
+@Aspect
+@Component
+@Order(-1)
+public class LogginAspect { }
+...
+@Aspect
+@Component
+@Order(5)
+public class ApiAnalyticsAspect { }
+```
+## Read method arguments wiht JoinPoints
+* Access and display the methdo signature
+```
+@Aspect
+@Component
+@Order(-1)
+public class LogginAspect {
+	@Before("com.spring.aop.aspect.AspectExpression.forPointcutWithoutGettersAndSetters()")
+	public void beforeAddAcountAdvice(JoinPoint theJoinPoint) {		
+		// display the method signtature
+		MethodSignature methodSignature = (MethodSignature) theJoinPoint.getSignature();
+		System.out.println("Method >>> " + methodSignature);		
+		
+		// get the arguments ant loop through
+		Object[] args = theJoinPoint.getArgs();
+		
+		for(Object tempArgObject: args) {			
+			if(tempArgObject instanceof Account) {
+				Account theAccount = (Account) tempArgObject;
+			}
+		}
+	}
+}
 ```
