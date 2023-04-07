@@ -1967,3 +1967,14 @@ public void afterThrowingFindAccountsAdvice(JoinPoint theJoinPoint, Throwable th
 }
 ```
 
+## @After
+* Uses case: 
+    * Log the exception and/or peforming auditing
+    * Code to execute the method result independently
+    * Encapusate this functionality in AOP aspect for easy reuse
+```
+@After("execution(* com.spring.aop.dao.AccountDAO.findAccounts(..))")
+public void afterFinallyFindAccountsAdvice(JoinPoint theJoinPoint) {    
+    System.out.println("After >>>>> " + theJoinPoint);
+}
+```
