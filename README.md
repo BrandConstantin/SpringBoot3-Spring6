@@ -1899,3 +1899,27 @@ public class LogginAspect { }
 @Order(5)
 public class ApiAnalyticsAspect { }
 ```
+## Read method arguments wiht JoinPoints
+* Access and display the methdo signature
+```
+@Aspect
+@Component
+@Order(-1)
+public class LogginAspect {
+	@Before("com.spring.aop.aspect.AspectExpression.forPointcutWithoutGettersAndSetters()")
+	public void beforeAddAcountAdvice(JoinPoint theJoinPoint) {		
+		// display the method signtature
+		MethodSignature methodSignature = (MethodSignature) theJoinPoint.getSignature();
+		System.out.println("Method >>> " + methodSignature);		
+		
+		// get the arguments ant loop through
+		Object[] args = theJoinPoint.getArgs();
+		
+		for(Object tempArgObject: args) {			
+			if(tempArgObject instanceof Account) {
+				Account theAccount = (Account) tempArgObject;
+			}
+		}
+	}
+}
+```
