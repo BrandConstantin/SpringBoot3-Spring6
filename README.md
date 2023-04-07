@@ -2004,3 +2004,5 @@ public Object aroundGetTraffic(ProceedingJoinPoint theProceedingJoinPoint) throw
     return result;
 }
 ```
+## Rethrow Exception
+![Rethrow Exception](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/rethrow-exception.png "Rethrow Exception")
