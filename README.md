@@ -147,6 +147,11 @@ management.endpoints.web.exposure.exclude=health,info
 * @Pointcuts - to create pointcuts
 * @Before - use a pointcuts
 * @Order - order the pointcuts
+* @AfterReturning
+* @AfterThrowing
+* @After
+* @Around
+
 
 ### Difference between @Controller and @RestController
 * @Controller is used to declare common web controllers which can return HTTP response but @RestController is used to create controllers for REST APIs which can return JSON.
@@ -1923,3 +1928,24 @@ public class LogginAspect {
 	}
 }
 ```
+## @AfterReturning 
+* most common: logging, security, transactions
+* audit logging: who, what, when, where
+* post-processing data
+    * post process data before returning to caller
+    * format the data or enrich the data
+![Return value AOP](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/return-value-aop.png "Return value AOP")
+```
+@AfterReturning(
+        pointcut="execution(* com.spring.aop.dao.AccountDAO.findAccounts(..))",
+        returning="result")
+public void afterReturningAdvice(JoinPoint theJoinPoint, List<Account> result) {
+    // print the method
+    String method = theJoinPoint.getSignature().toShortString();
+    
+    // print the result of the method calls
+    System.out.println(">>>>>>>>>> result " + result);
+}
+```
+
+
