@@ -1948,4 +1948,22 @@ public void afterReturningAdvice(JoinPoint theJoinPoint, List<Account> result) {
 }
 ```
 
+## @AfterThrowing
+* Use case:
+    * Log the exceptions
+    * Perform auditing on the expception
+    * Notify DevOps team via email or SMS
+    * Encapusate this functionality in AOP aspect for easy reuse
+```
+@AfterThrowing(
+        pointcut="execution(* com.spring.aop.dao.AccountDAO.findAccounts(..))",
+        throwing="theExc")
+public void afterThrowingFindAccountsAdvice(JoinPoint theJoinPoint, Throwable theExc) {
+    // print the method
+    String method = theJoinPoint.getSignature().toShortString();
+    
+    // log the exception
+    System.out.println("The exception is >> " + theExc);
+}
+```
 
