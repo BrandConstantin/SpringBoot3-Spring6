@@ -2021,3 +2021,5 @@ public Object aroundGetTraffic(ProceedingJoinPoint theProceedingJoinPoint) throw
 ![Spring Dispatcher Servlet Initializer](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/dispatcher-serlvel-initializer.png "Spring Dispatcher Servlet Initializer")
 * Develop the Spring Controller
 ![Spring Controlelr](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-controller.png "Spring Controlelr")
+* Add spring-security-web and spring-security-config (spring framework and spring security are 2 different projects)
+![Spring security](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-security.png "Spring security")
