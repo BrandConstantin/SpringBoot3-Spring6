@@ -2006,3 +2006,18 @@ public Object aroundGetTraffic(ProceedingJoinPoint theProceedingJoinPoint) throw
 ```
 ## Rethrow Exception
 ![Rethrow Exception](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/rethrow-exception.png "Rethrow Exception")
+
+# Spring Security
+![Spring security filter](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-security-filters.png "Spring security filter")
+* Use java config (@Configuration) or xml config to configuration spring security
+### Dev process
+* Add maven dependencies for spring mvc web app
+![Add maven dependency](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/maven-dependency.png "Add maven dependency")
+* Crate spring configuration
+![Spring configuration](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-configuration.png "Spring configuration")
+* The old way was config the xml servlet
+![Old way](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/old-way.png "Old way")
+* The new way to config 
+![Spring Dispatcher Servlet Initializer](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/dispatcher-serlvel-initializer.png "Spring Dispatcher Servlet Initializer")
+* Develop the Spring Controller
+![Spring Controlelr](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-controller.png "Spring Controlelr")
