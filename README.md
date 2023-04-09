@@ -2025,4 +2025,10 @@ public Object aroundGetTraffic(ProceedingJoinPoint theProceedingJoinPoint) throw
 ![Spring security](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-security.png "Spring security")
 * Create spring seurity initializer, create spring security configuration (@Configuration) and add users and roles
 * The login in Spirng security is a "web browser session"
-
+## Dev process for login
+* Modify spring security configuration to reference custom login form
+![Spring security config](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-security-config.png "Spring security config")
+* Develop a controller to custom login
+![Develop a controller](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-security-controller.png "Develop a controller")
+* Create custom login form (html, css, spring mvc form tag)
+![Custom login](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/custom-login.png "Custom login")
