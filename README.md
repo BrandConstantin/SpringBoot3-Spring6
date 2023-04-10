@@ -2150,3 +2150,49 @@ private int getIntProperty(String propName) {
 ![Use JDBC](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/use-jdbc.png "Use JDBC")
 * Storage password in bcrypt
 ![Password encrypt](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/password-encrypt.png "Password encrypt")
+
+# Spring REST API
+![Spring REST API](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/rest-api.png "Spring REST API")
+* Spring use the Jackson Project behind the scenes, Jakson handles data binding between JSON and Java POJO
+![Java POJO](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/java-pojo.png "Java POJO")
+ ---------------------------------------------------------
+![Java POJO to JSON](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/java-pojo-to-json.png "Java POJO to JSON")
+```
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+
+public class Driver {
+
+	public static void main(String[] args) {
+		try {
+			// create object mapper
+			ObjectMapper mapper = new ObjectMapper();
+			
+			// read JSON and convert to java pojo
+			Student theStudent = mapper.readValue(new File("data/sample-full.json"), Student.class);
+			
+			// print the data
+			System.out.println("First name: " + theStudent.getFirstName());
+			System.out.println("Last name: " + theStudent.getLastName());
+			System.out.println("Address: " + theStudent.getAddress().getCity());
+			
+			Address tempAddress = theStudent.getAddress();
+			System.out.println("Country: " + tempAddress.getCountry());
+			
+			for(String tempLang: theStudent.getLanguages()) {
+				System.out.print(tempLang + ",");
+			}
+		}catch(Exception exc) {
+			exc.printStackTrace();
+		}
+	}
+
+}
+```
+* To ignore the unknown properties:
+```
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Student {
+    ...
+}
+```
