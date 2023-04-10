@@ -2032,3 +2032,30 @@ public Object aroundGetTraffic(ProceedingJoinPoint theProceedingJoinPoint) throw
 ![Develop a controller](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-security-controller.png "Develop a controller")
 * Create custom login form (html, css, spring mvc form tag)
 ![Custom login](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/custom-login.png "Custom login")
+
+## CSRF (Cross site request forgery)
+* Manually add CSRF token
+![Manually CSRF](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/manually_CSRF.png "Manually CSRF")
+* The best practice is use <form:form> tag because add automatically the CSRF
+
+## Configure access resources
+```
+@Override
+protected void configure(HttpSecurity http) throws Exception {
+    http.authorizeRequests()
+        .antMatchers("/").hasRole("EMPLOYEE")
+        .antMatchers("/leaders/**").hasRole("MANAGER")
+        .antMatchers("/systems/**").hasRole("ADMIN")
+        .antMatchers("/resources/**").permitAll()
+        .anyRequest().authenticated()
+    .and()
+    .formLogin()
+        .loginPage("/showLoginPage")
+        .loginProcessingUrl("/authTheUser")
+        .permitAll()
+    .and()
+    .logout().permitAll()
+    .and()
+    .exceptionHandling().accessDeniedPage("/access-denied");
+}
+```
