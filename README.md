@@ -2059,3 +2059,94 @@ protected void configure(HttpSecurity http) throws Exception {
     .exceptionHandling().accessDeniedPage("/access-denied");
 }
 ```
+## Dev process access BBDD
+* Add database support to maven pom file
+```
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>5.1.9</version>
+</dependency>	
+<dependency>
+    <groupId>com.mchange</groupId>
+    <artifactId>c3p0</artifactId>
+    <version>0.9.5.5</version>
+</dependency>	
+```
+* Create JDBC properties file
+```
+# JDBC connection properties
+#
+jdbc.driver=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://localhost:3306/spring_security_demo_plaintext?useSSL=false
+jdbc.user=springstudent
+jdbc.password=springstudent
+
+#
+# Connection pool properties
+#
+connection.pool.initialPoolSize=5
+connection.pool.minPoolSize=5
+connection.pool.maxPoolSize=20
+connection.pool.maxIdleTime=3000
+```
+* Define DataSource in Spring configuration
+```
+@Configuration
+@EnableWebMvc
+@ComponentScan(basePackages = "com.spring.security")
+@PropertySource("classpath:persitence-mysql.properties")
+public class AppConfig implements WebMvcConfigurer {
+	// set up variable to hold the properties
+	@Autowired
+	private Environment env;
+	
+	private Logger logger = Logger.getLogger(getClass().getName());
+    ....
+}
+```
+* Define a bean
+```
+@Bean
+public DataSource securityDataSource() {
+    // create connection pool
+    ComboPooledDataSource securityDataSource = new ComboPooledDataSource();
+    
+    // set the jdbc driver class
+    try {
+        securityDataSource.setDriverClass(env.getProperty("jdbc.driver"));
+    } catch (PropertyVetoException e) {
+        throw new RuntimeException(e);
+    }
+    
+    // log the connection props
+    logger.info(">>>> jdbc.url= " + env.getProperty("jdbc.url"));
+    logger.info(">>>> jdbc.user= " + env.getProperty("jdbc.user"));
+    
+    // set dataase connection props
+    securityDataSource.setJdbcUrl(env.getProperty("jdbc.url"));
+    securityDataSource.setUser(env.getProperty("jdbc.user"));
+    securityDataSource.setPassword(env.getProperty("jdbc.password"));
+    
+    // set connection pool props
+    securityDataSource.setInitialPoolSize(getIntProperty("connection.pool.initialPoolSize"));
+    securityDataSource.setMinPoolSize(getIntProperty("connection.pool.minPoolSize"));
+    securityDataSource.setMaxPoolSize(getIntProperty("connection.pool.maxPoolSize"));
+    securityDataSource.setMaxIdleTime(getIntProperty("connection.pool.maxIdleTime"));
+    
+    return securityDataSource;
+}
+
+// helper method
+// read environment property and convert to int
+private int getIntProperty(String propName) {
+    String propVal = env.getProperty(propName);
+    int intPropVal = Integer.parseInt(propVal);
+    
+    return intPropVal;
+}
+```
+* Update Spring security to use JDBC
+![Use JDBC](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/use-jdbc.png "Use JDBC")
+* Storage password in bcrypt
+![Password encrypt](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/password-encrypt.png "Password encrypt")
