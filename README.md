@@ -2273,3 +2273,11 @@ public ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundExcep
     return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 }
 ```
+## API Design
+* Review API requirement
+    * Create REST API for CRM system (get list customers, delete customer, update customer)
+* Identify main resources / entity
+    * the entity with noun "customer" and the endpoints with plural "customers"
+* Use HTTP methods to asign a action on resource 
+    * POST, GET, PUT, DELETE
+![Perfect endpoints](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/perfect-endpoints.png "Perfect endpoints")
