@@ -2281,3 +2281,6 @@ public ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundExcep
 * Use HTTP methods to asign a action on resource 
     * POST, GET, PUT, DELETE
 ![Perfect endpoints](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/perfect-endpoints.png "Perfect endpoints")
+
+### Arquitecture CRM Web APP REST Client + CRM REST API
+![CRM](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/CRM.png "CRM")
