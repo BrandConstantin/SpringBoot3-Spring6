@@ -2196,7 +2196,7 @@ public class Student {
     ...
 }
 ```
-# HTTP overview
+## HTTP overview
 * Stauts code
 ```
 100 - 199 > Informational
@@ -2204,4 +2204,72 @@ public class Student {
 300 - 399 > Redirection
 400 - 499 > Client error
 500 - 599 > Server error
+```
+## Handling Exception
+* Create a custom error response class
+```
+public class StudentErrorResponse {
+	private int status;
+	private String message;
+	private int timeStamp;
+	
+	public StudentErrorResponse() { }
+
+	public StudentErrorResponse(int status, String message, int timeStamp) {
+		this.status = status;
+		this.message = message;
+		this.timeStamp = timeStamp;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+    ...
+}
+```
+* Create a custom exception class
+```
+public class StudentNotFoundException extends RuntimeException{
+	
+	public StudentNotFoundException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public StudentNotFoundException(String message) {
+		super(message);
+	}
+
+	public StudentNotFoundException(Throwable cause) {
+		super(cause);
+	}
+	
+}
+```
+* Update Rest Service 
+```
+@GetMapping("/students/{studentId}")
+public Student getStudent(@PathVariable int studentId) {		
+    if((studentId < 0) || (studentId >= theStudents.size())) {
+        throw new StudentNotFoundException("Not found student with id: " + studentId);
+    }
+    
+    return theStudents.get(studentId);		
+}
+```
+* Add an exception handler using @ExceptionHandler
+```
+@ExceptionHandler
+public ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundException exc){
+    StudentErrorResponse error = new StudentErrorResponse();
+    
+    error.setStatus(HttpStatus.NOT_FOUND.value());
+    error.setMessage(exc.getMessage());
+    error.setTimeStamp(System.currentTimeMillis());
+    
+    return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+}
 ```
