@@ -3,6 +3,7 @@ Learn Spring Boot 3 with Spring 6 and Hibernate
 Course: https://www.udemy.com/course/spring-hibernate-tutorial/
 
 ## Hibernate, Spring Data JPA, Spring Data REST, Spring Security, Thymeleaf, Spring MVC, JSP, Spring REST API
+For Spring Boot 3 it needs JDK 17 version. 
 
 ## Spring Boot Initialzr
 https://start.spring.io/
