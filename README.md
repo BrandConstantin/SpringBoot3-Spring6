@@ -175,7 +175,7 @@ info.app.lesson=Actuator
 
 ![Command line](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/command-line.png "Command line")
 
-* Two options for running the app
+* Command for running the app from cmd:
     * echo %JAVA_HOME%
     * java --version
     * cd folder/myapp
@@ -183,6 +183,32 @@ info.app.lesson=Actuator
     * java -jar target\myapp-0.0.1-SNAPSHOT.jar
     * mvnw spring-boot:run
     * CTRL+c to stop the server
+
+## Application properties file and inject properties into spring boot app
+* By default is located in src/main/resources/application.properties
+* With @Value annotation we can define a custom properties
+```
+## injecting custom properties
+## http://localhost:8080/home/teamInfo
+coach.name=Micky Mouse
+team.name=Lider United
+```
+* For injecting the properties 
+```
+@RestController
+public class FunRestController{
+    // inject custom properties
+    @Value("${coach.name}")
+    private String coachName;
+    @Value("${team.name}")
+    private String teamName;
+
+    @GetMapping("/teamInfo")
+    public String getTeamName(){
+        return "Team info: " + coachName + " - " + teamName;
+    }
+}
+```
 
 ## Annotations:
 * @Override - override the method from the principal class
@@ -233,20 +259,6 @@ info.app.lesson=Actuator
 * @RestController = @Controller + @RequestBody
 * The @Controller is a common annotation which is used to mark a class as Spring MVC Controller while the @RestController is a special controller used in RESTFul web services
 
-## Injecting custom application properties
-* By default is located in src/main/resources/application.properties
-* With @Value annotation we can define a custom properties
-```
-coach.name=Micky Mouse
-```
-* For injecting the properties 
-```
-@RestController
-public class FunRestController{
-    @Value("${coach.name}")
-    private String coachName;
-}
-```
 
 ## Configure Spring Boot Server
 * Spring Boot properties have more than 1000. The properties are grouped into the following categories: core, web, security, data, acutator, integration, devtools, testing
