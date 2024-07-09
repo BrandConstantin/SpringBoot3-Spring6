@@ -28,14 +28,14 @@ https://start.spring.io/
 * Maven is the most popular Project Management tool
 * Can download the jar files needed for your project
 * Structure:
-![Standard Directory Structure](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/structure-directory.png "Standard Directory Structure")
+![Standard Directory Structure](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/standard-directory-structure.png "Standard Directory Structure")
 * To find dependency: spring.io, hibernate.org, search.maven.org
 * standard directory structure
 ![src-main-java](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/src-main-java.png "src-main-java")
 ![src-main-webapp](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/msrc-main-webappvnw.png "src-main-webapp")
 POM structure:
-![pom xml](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/pom xml.png "pom xml")
-![pom structure](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/pom structurenw.png "pom structure")
+![pom xml](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/pom-xml.png "pom xml")
+![pom structure](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/pom-structure.png "pom structure")
 ![Spring Boot Starter](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-boot-starter.png "Spring Boot Starter")
 To find dependency coordinates:
 * pages like spring.io, hibernate.org
