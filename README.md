@@ -210,6 +210,22 @@ public class FunRestController{
 }
 ```
 
+## Configure Spring Boot Server
+* Spring Boot properties have more than 1000. The properties are grouped into the following categories: core, web, security, data, acutator, integration, devtools, testing
+* Core properties:
+![Core Properties](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/core-properties.png "Core Properties")
+* Create your own log file > logging.file=my-stuff.log
+* Web properties
+![Web Properties](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/web-properties.png "Web Properties")
+* Data properties:
+![Data Properties](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/data-properties.png "Data Properties")
+* Server properties:
+```
+server.port=7070
+server.servlet.context-path=/home
+```
+* the result is http://127.0.0.1:7070/home/teamInfo
+
 ## Annotations:
 * @Override - override the method from the principal class
 * @Component - mark a class like a spring bean and make the bean available for dependency injection
@@ -259,22 +275,6 @@ public class FunRestController{
 * @RestController = @Controller + @RequestBody
 * The @Controller is a common annotation which is used to mark a class as Spring MVC Controller while the @RestController is a special controller used in RESTFul web services
 
-
-## Configure Spring Boot Server
-* Spring Boot properties have more than 1000. The properties are grouped into the following categories: core, web, security, data, acutator, integration, devtools, testing
-* Core properties:
-![Core Properties](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/core-properties.png "Core Properties")
-* Create your own log file > logging.file=my-stuff.log
-* Web properties
-![Web Properties](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/web-properties.png "Web Properties")
-* Data properties:
-![Data Properties](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/data-properties.png "Data Properties")
-* Server properties:
-```
-server.port=7070
-server.servlet.context-path=/home
-```
-* the result is http://127.0.0.1:7070/home/teamInfo
 
 # Inversion Of Control 
 * Design process and outsource, build and manage objects
