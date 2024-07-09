@@ -87,8 +87,14 @@ Use only what you need.
 
 ## Spring Boot Dev Tools
 * for automatic restart, when add new dependencies to pom file for example, use spring-boot-devtools 
-* then go to Preferences > Build, Execution, Deployment > Compiler > check box Build project automatically
-* additional settings > Preferences > Advanged settings > check box Allow auto-make to ...
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-devtools</artifactId>
+</dependency>
+```
+* then go to Settings > Build, Execution, Deployment > Compiler > check box Build project automatically
+* additional Settings > Advanged settings > check box Allow auto-make to start even if developed application is currently running
 
 ## Spring Boot Actuator
 * it use to expose to monitor and manage the endpoints of application, to check the health of application
