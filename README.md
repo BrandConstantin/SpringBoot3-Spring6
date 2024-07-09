@@ -46,7 +46,7 @@ To find dependency coordinates:
     * if you have maven installed in your pc run: 
         * ./mvnw package
         * ./mvnw spring-boot:run
-![mvnw](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/mvnw.png "mvnw")
+![mvnw](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/mvnw-cmd.png "mvnw")
 * Warning: Do not use the src/main/weapp directory if your application is a packaged as a JAR. Although tihis is a standard Maven directory, it works only with WAR packaging. 
 
 ## Create a REST Controller
@@ -287,7 +287,7 @@ applicationContext.xml
     <constructor-arg ref="myFortuneService"/>
 </bean>
 ```
-![Spring behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Spring-behind-the-scene.png "Spring behind the scene")
+![Spring behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-behind.png "Spring behind the scene")
 ---------------------------------------------------------
 ![Spring process](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-process.png "Spring process")
 
@@ -318,9 +318,9 @@ public void setFortuneService(FortuneService fortuneService){
     <property name="fortuneServ" ref="myFortune" />
 </bean>
 ```
-![Setter injection](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Setter-injection.png "Setter injection")
+![Setter injection](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/setter-injection-method.png "Setter injection")
 ---------------------------------------------------------
-![Setter injection behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Setter-injection-behind-the-scene.png "Setter injection behind the scene")
+![Setter injection behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/setter-injection-behind.png "Setter injection behind the scene")
 ---------------------------------------------------------
 ![Spring process setter injection](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/setter-injection-process.png "Spring process setter injection")
 
