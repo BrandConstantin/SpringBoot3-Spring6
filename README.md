@@ -32,7 +32,7 @@ https://start.spring.io/
 * To find dependency: spring.io, hibernate.org, search.maven.org
 * standard directory structure
 ![src-main-java](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/src-main-java.png "src-main-java")
-![src-main-webapp](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/msrc-main-webapp.png "src-main-webapp")
+![src-main-webapp](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/src-main-webapp.png "src-main-webapp")
 POM structure:
 ![pom xml](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/pom-xml.png "pom xml")
 ![pom structure](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/pom-structure.png "pom structure")
