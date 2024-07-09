@@ -5,6 +5,8 @@ Course: https://www.udemy.com/course/spring-hibernate-tutorial/
 ## Hibernate, Spring Data JPA, Spring Data REST, Spring Security, Thymeleaf, Spring MVC, JSP, Spring REST API
 For Spring Boot 3 it needs JDK 17 version. 
 
+# Spring Boot Start
+
 ## Spring Boot Initialzr
 Spring Boot use behind Spring. Also, Spring Boot embedded HTTP server, so you don't need to install a server separately.
 To start the application can use the command line: java -jar mycoolapp.jar or from IDE: Run As → java application. It can also be deployed in the traditional way, deploying a war file to an external server. 
@@ -94,7 +96,7 @@ Use only what you need.
 </dependency>
 ```
 * then go to Settings > Build, Execution, Deployment > Compiler > check box Build project automatically
-* additional Settings > Advanged settings > check box Allow auto-make to start even if developed application is currently running
+* additional Settings > Advanced settings > check box Allow auto-make to start even if developed application is currently running
 
 ## Spring Boot Actuator
 * it use to expose to monitor and manage the endpoints of application, to check the health of application
@@ -104,8 +106,17 @@ Use only what you need.
 
 ![Actuator endpoints](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/actuator-endpoints.png "Actuator endpoints")
 
-* add the endpoints and the artifact in pom file
+* change the pom file
 ```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+```
+* add the endpoints and the artifact in properties file
+```
+## use wildcard "*" to expose all endpoints
+##management.endpoints.web.exposure.include=*
 management.endpoints.web.exposure.include=health,info
 management.info.env.enabled=true
 ```
@@ -121,6 +132,12 @@ Tomcat started on port(s): 8080 (http) with context path ''
 
 ## Spring Boot Actuator - securing endpoints
 * add dependency spring-boot-security
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+```
 
 ![Actuator security](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/actuato-security.png "Actuator security")
 
@@ -131,6 +148,26 @@ Tomcat started on port(s): 8080 (http) with context path ''
 * we also can exclude endopoints
 ```
 management.endpoints.web.exposure.exclude=health,info
+```
+
+* application.properties file 
+```
+## Actuator
+## use wildcard "*" to expose all endpoints
+##management.endpoints.web.exposure.include=*
+management.endpoints.web.exposure.include=health,info
+management.endpoints.web.exposure.exclude=devtools
+management.info.env.enabled=true
+spring.security.user.name=adminuser
+spring.security.user.password=adminuser1
+
+##http://localhost:8080/home/actuator
+
+## actuator info
+info.app.name=SpringApp
+info.app.description=Learning Spring Boot
+info.app.version=1.0
+info.app.leasson=Actuator
 ```
 
 ## Spring Boot from command line
