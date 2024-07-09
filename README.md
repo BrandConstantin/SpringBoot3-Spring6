@@ -15,48 +15,64 @@ https://start.spring.io/
 * select the dependencies and download the zip file
 * unzip and import to IDE
 
-![Standard Directory Structure](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-boot-contains.PNG "spring-boot-contains")
-![Standard Directory Structure](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/initialzr.PNG "initialzr")
-
-## Create a REST Controller
-```
-@RestController
-public class FunRestController {
-    @GetMapping("/")
-    public String sayHello(){
-        return "Hello World!";
-    }
-}
-```
+![spring-boot-contains](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-boot-contains.png "spring-boot-contains")
+![initialzr](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/initialzr.png "initialzr")
 
 ## Spring Framework
-Core Container contains: Beans -> Core -> SpEL -> Context
-Infrastructure contains: AOP -> Aspects -> Instrumentation -> Messaging
-Data Access Layer contains: JDBC -> ORM -> Transactions -> OXM and JMS
-Web Layer contains: Servlet -> WebSocket -> Web
+* Core Container contains: Beans -> Core -> SpEL -> Context
+* Infrastructure contains: AOP -> Aspects -> Instrumentation -> Messaging
+* Data Access Layer contains: JDBC -> ORM -> Transactions -> OXM and JMS
+* Web Layer contains: Servlet -> WebSocket -> Web
 
 ## What is Maven?
 * Maven is the most popular Project Management tool
 * Can download the jar files needed for your project
 * Structure:
-![Standard Directory Structure](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/structure-directory.PNG "Standard Directory Structure")
+![Standard Directory Structure](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/structure-directory.png "Standard Directory Structure")
 * To find dependency: spring.io, hibernate.org, search.maven.org
+* standard directory structure
+![src-main-java](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/src-main-java.png "src-main-java")
+![src-main-webapp](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/msrc-main-webappvnw.png "src-main-webapp")
+POM structure:
+![pom xml](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/mpom xml.png "pom xml")
+![pom structure](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/mvpom structurenw.png "pom structure")
+![Spring Boot Starter](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-boot-starter.png "Spring Boot Starter")
+To find dependency coordinates:
+* pages like spring.io, hibernate.org
+* https://central.sonatype.com
 * Maven Wrapper files 
     * mvnw allows you to run Maven project
     * to run on windows/linux: mvnw clean compile test / ./mvnw clean compile test
     * if you have maven installed in your pc run: 
         * ./mvnw package
         * ./mvnw spring-boot:run
-![mvnw](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/mvnw.PNG "mvnw")
+![mvnw](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/mvnw.png "mvnw")
 * Warning: Do not use the src/main/weapp directory if your application is a packaged as a JAR. Although tihis is a standard Maven directory, it works only with WAR packaging. 
 
-## Spring Boot
-* can use templates like FreeMarker, Thymeleaf or Mustache
+## Create a REST Controller
+![REST Controller](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/rest-controller.png "REST Controller")
+If a rest controller it’s not defined, we have the famous error “Whitelabel Error Page - This application has no explicit mapping for /error, so you are seeing this as a fallback”. 
+
+## Spring modules
+Spring framework have an additional module like Spring Cloud, Spring Data, Spring Batch, Spring Security, Spring Web Service, Spring LDAP etc
+Use only what you need.
+
+## Application properties
+![Properties](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/properties.png "Properties")
+
+## Static Content
+![static-content](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/static-content.png "static-content")
+
+### Templates
+-FreeMarker
+-Thymeleaf
+-Mustache
 
 ## Spring Boot Starters
 * for Spring MVC you normally need: spring-webmvc, hibernate-validator, thymeleaf
 * for Spring Boot Starter-Web you need: spring-boot-starter-web (contains all the bellow, json, tomcat etc)
 * include spring-boot-starter-security and spring-boot-starter-data-jpa
+
 
 ## Spring Boot Parents for Starter
 * spring-boot-starter-parent is provided for Maven by defaults and contain default compiler lever and utf-8 encoding
@@ -271,7 +287,7 @@ applicationContext.xml
     <constructor-arg ref="myFortuneService"/>
 </bean>
 ```
-![Spring behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Spring-behind-the-scene.PNG "Spring behind the scene")
+![Spring behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Spring-behind-the-scene.png "Spring behind the scene")
 ---------------------------------------------------------
 ![Spring process](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-process.png "Spring process")
 
@@ -302,9 +318,9 @@ public void setFortuneService(FortuneService fortuneService){
     <property name="fortuneServ" ref="myFortune" />
 </bean>
 ```
-![Setter injection](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Setter-injection.PNG "Setter injection")
+![Setter injection](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Setter-injection.png "Setter injection")
 ---------------------------------------------------------
-![Setter injection behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Setter-injection-behind-the-scene.PNG "Setter injection behind the scene")
+![Setter injection behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Setter-injection-behind-the-scene.png "Setter injection behind the scene")
 ---------------------------------------------------------
 ![Spring process setter injection](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/setter-injection-process.png "Spring process setter injection")
 
