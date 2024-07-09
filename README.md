@@ -6,9 +6,17 @@ Course: https://www.udemy.com/course/spring-hibernate-tutorial/
 For Spring Boot 3 it needs JDK 17 version. 
 
 ## Spring Boot Initialzr
+Spring Boot use behind Spring. Also, Spring Boot embedded HTTP server, so you don't need to install a server separately.
+To start the application can use the command line: java -jar mycoolapp.jar or from IDE: Run As → java application. It can also be deployed in the traditional way, deploying a war file to an external server. 
+Spring Boot include the on server so we run as java application not like a server. On web browser open with localhost:8080
+
+
 https://start.spring.io/
 * select the dependencies and download the zip file
 * unzip and import to IDE
+
+![Standard Directory Structure](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-boot-contains.PNG "spring-boot-contains")
+![Standard Directory Structure](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/initialzr.PNG "initialzr")
 
 ## Create a REST Controller
 ```
