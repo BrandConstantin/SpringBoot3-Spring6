@@ -34,8 +34,8 @@ https://start.spring.io/
 ![src-main-java](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/src-main-java.png "src-main-java")
 ![src-main-webapp](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/msrc-main-webappvnw.png "src-main-webapp")
 POM structure:
-![pom xml](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/mpom xml.png "pom xml")
-![pom structure](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/mvpom structurenw.png "pom structure")
+![pom xml](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/pom xml.png "pom xml")
+![pom structure](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/pom structurenw.png "pom structure")
 ![Spring Boot Starter](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-boot-starter.png "Spring Boot Starter")
 To find dependency coordinates:
 * pages like spring.io, hibernate.org
