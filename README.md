@@ -167,7 +167,7 @@ spring.security.user.password=adminuser1
 info.app.name=SpringApp
 info.app.description=Learning Spring Boot
 info.app.version=1.0
-info.app.leasson=Actuator
+info.app.lesson=Actuator
 ```
 
 ## Spring Boot from command line
@@ -176,8 +176,13 @@ info.app.leasson=Actuator
 ![Command line](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/command-line.png "Command line")
 
 * Two options for running the app
-    * java -jar
+    * echo %JAVA_HOME%
+    * java --version
+    * cd folder/myapp
+    * mvnw package
+    * java -jar target\myapp-0.0.1-SNAPSHOT.jar
     * mvnw spring-boot:run
+    * CTRL+c to stop the server
 
 ## Annotations:
 * @Override - override the method from the principal class
