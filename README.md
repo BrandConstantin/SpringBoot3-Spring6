@@ -226,6 +226,30 @@ server.servlet.context-path=/home
 ```
 * the result is http://127.0.0.1:7070/home/teamInfo
 
+# Inversion Of Control 
+* Design process and outsource, build and manage objects
+* Interfaces are used and the application must be as configurable as possible
+![spring-container](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-container.png "spring-container")
+
+## Spring Container and his functions
+* create and manage objects (Inversion of control)
+* inject dependencies (dependency injections)
+* for spring container configuration use:
+    * xml (deprecated)
+    * java annotations
+    * java code
+
+## Spring Injection types
+* Constructor injection, use when you have required dependencies and generally recommended by the spring.io
+* Setter injection, use when you have optional dependencies and if dependency is not provided, your app can provide a one default
+* Field injection (not recommended by spring.io)
+
+For dependency injection, Spring can use @Autowired, Spring looking for a class that matches (class or interface) and inject automatically. 
+For this inection Spring will scan for @Components. 
+
+
+
+
 ## Annotations:
 * @Override - override the method from the principal class
 * @Component - mark a class like a spring bean and make the bean available for dependency injection
@@ -270,23 +294,14 @@ server.servlet.context-path=/home
 * @Around
 
 
+
+
+
 ### Difference between @Controller and @RestController
 * @Controller is used to declare common web controllers which can return HTTP response but @RestController is used to create controllers for REST APIs which can return JSON.
 * @RestController = @Controller + @RequestBody
 * The @Controller is a common annotation which is used to mark a class as Spring MVC Controller while the @RestController is a special controller used in RESTFul web services
 
-
-# Inversion Of Control 
-* Design process and outsource, build and manage objects
-* Interfaces are used and the application must be as configurable as possible
-
-## Spring Container and his functions
-* create and manage objects (Inversion of control)
-* inject dependencies (dependency injections)
-* for spring container configuration use:
-    * xml (deprecated)
-    * java annotations
-    * java code
 
 ## Spring development process:
 * Configuration of a spring bean
@@ -301,11 +316,6 @@ ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("app
 ```
 Coach theCoach = context.getBean("myCoach", Coach.class);
 ```
-
-## Spring Injection types
-* Constructor injection
-* Setter injection
-* Field injection (not recommended by spring.io)
 
 ## Constructor injection development process:
 * Define the dependency class and the interface
