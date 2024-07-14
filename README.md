@@ -298,6 +298,17 @@ public class DemoController{
     }
 }
 ```
+## Component Scanner
+Scan the java classes for this special annotations and automatically register the beans in the spring container
+![Spring  boot application](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-boot-application.png "Spring boot application")
+---------------------------------------------------------
+![Component scanning](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/component-scanning.png "Component scanning")
+---------------------------------------------------------
+* By default Spring Boot will not component scan the package with demo name
+* Explicit component scanning
+![Explicitly list of packages](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/explicit-list-package.png "Explicitly list of packages")
+Error: "Parameter 0 of constructor in com.rest.DemoController requiered a bean of type 'com.util.Coach' that could no be fount" ocurre when the bean is not part of default package. Resolve add the scan package
+![list-base-packages-to-scan](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/list-base-packages-to-scan.png "list-base-packages-to-scan")
 
 
 
@@ -378,18 +389,8 @@ applicationContext.xml
 </bean>
 ```
 ![Spring behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-behind.png "Spring behind the scene")
----------------------------------------------------------
 
 
-## Component Scanner
-* Scan the java classes for this special annotations and automatically register the beans in the spring container
-* The @Component tag composed by: @EnableAutoConfiguration, @ComponentScan and @Configuration
-![Spring  boot application](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-boot-application.png "Spring boot application")
----------------------------------------------------------
-![Component scanning](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/component-scanning.png "Component scanning")
-* By default Spring Boot will not component scan the package with demo name
-* Explicit component scanning
-![Explicitly list of packages](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/explicit-list-package.png "Explicitly list of packages")
 
 ## Setter injection
 * Create the setter method for injection
