@@ -346,7 +346,7 @@ public class DemoController {
 }
 ```
 ## Field injection
-It's not recommend to use by the spring.io. It makes the code harder to unit test. 
+It's not recommended to use spring.io. It makes the code harder to unit test. 
 ```
 @RestController
 public class DemoController{
@@ -367,8 +367,8 @@ public class DemoController{
 
 
 ## @Primary
-* Other alternative to @Qualifier is @Primary. Instead of specifying a coach by name using @Qualifier you specify the primary coach.
-* You can use more than one single @Primary annotation. Error: "Unsatisfield dependency expressed through constructor parameter 0: more than one 'primary' bean found among candidades".  
+* Another alternative to @Qualifier is @Primary. Instead of specifying a coach by name using @Qualifier you specify the primary coach.
+* You can use more than one single @Primary annotation. Error: "Unsatisfied dependency expressed through constructor parameter 0: more than one 'primary' bean found among candidates".  
 ```
 @Component
 @Primary
@@ -386,7 +386,7 @@ public class BaseballCoach implements Coach{
 * Disadvantages:
     * if you have web related components like @RestController, not created until requested
     * need enough memory for all beans once created
-* It is deseabled by default
+* It is disabled by default
 ```
 @Component
 @Lazy
@@ -399,7 +399,7 @@ public class BaseballCoach implements Coach{
 ```
 
 ## Bean scopes
-* Default scop is singleton
+* Default scope is singleton
 * Spring Container creates only one instance of the bean, by default and it is cached in memory. All dependency injection for the bean will referenece the same bean
 * The scope of a bean refers to the life cycle of a bean, how long it will exist, how many instances will be created and how the bean will be shared
 ![Bean Scopes](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/bean-scopes.png "Bean Scopes")
@@ -423,6 +423,52 @@ System.out.println(theCoach + " / " + alphCoach);
     <bean id="myCoach" class="beanscopes.BaseballCoach" scope="prototype"></bean>
 ```
 
+## Bean Lifecycle Methods
+Container Started -> Bean Instantiated -> Dependencies Injected -> Internal Spring Processing -> you custom init method -> bean ready to use
+Container Shutdown -> your custom destroy method -> stop
+* Custom code can be added during bean initialization or bean destruction
+* `init-method` is the method to initialize an action during bean initialization
+* `destroy-method` is the method to initialize an action during bean destruction
+* We can do this on globaly
+```
+<bean id="myCoach" class="beanlifecycle.TrackCoach" 
+	init-method="doInitMethod" destroy-method="doDestroyMehtod">
+</bean>
+```
+* Or separarly, by class
+```
+@Component
+public class BaseballCoach implements Coach{
+    public BaseballCoach(){
+        System.out.println("In constructor class " + getClass().getSimpleName());
+    }
+
+    // define the init method
+    @PostConstruct
+    public void doMyStartupStuff(){
+        System.out.println("Do my startup stuff");
+    }
+
+    // define the destroy method
+    @PreDestroy
+    public void doMyDestroyStruff(){
+        System.out.println("Destroy all my staff!");
+    }
+
+    @Override
+    public String getDailyWork(){ return "Spend 30 min in batting practice"; }
+}
+```
+* The scope prototype does not have the destroy method so it cannot be initialized. In order to do this, the destroy() method is defined.
+
+## Java Config Bean
+* Configure in 3 steps:
+    * Create @Configuration class
+![@Configuarion class](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/step1.png "@Configuarion class")    
+    * Define @Bean method
+![@Bean Method](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/step2.png "@Bean Method")  
+    * Inject the bean in the controller
+![Inject the bean](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/step3.png "Inject the bean") 
 
 
 
@@ -522,32 +568,11 @@ applicationContext.xml
 
 
 
-
-## Bean Lifecycle Methods
-* Custom code can be added during bean initialization or bean destruction
-* `init-method` is the method to initialize an action during bean initialization
-* `destroy-method` is the method to initialize an action during bean destruction
-```
-<bean id="myCoach" class="beanlifecycle.TrackCoach" 
-	init-method="doInitMethod" destroy-method="doDestroyMehtod">
-</bean>
-```
-* The scope prototype does not have the destroy method so it cannot be initialized. In order to do this, the destroy() method is defined.
-
-## Java Config Bean
-* In 3 steps:
-    * Create @Configuration class
-![@Configuarion class](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/step1.png "@Configuarion class")    
-    * Define @Bean method
-![@Bean Method](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/step2.png "@Bean Method")  
-    * Inject the bean
-![Inject the bean](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/step3.png "Inject the bean")  
-
 # Hibernate & JPA
 * Hibernate is a framework for persisting and saving java objects in a database
 * Hibernate provide the object-to-relational mapping ORM
-* In Spring Boot, Hibernate is de default implementation of JPA
-* EntityManager is main component for creating queries and is from Jakarta Persistence API
+* In Spring Boot, Hibernate is de default implementation of JPA (Jakarta Persistence API)
+* EntityManager is main component for creating queries
 * https://hibernate.org
 * Download and install mysql 8 : https://dev.mysql.com/downloads/windows/installer/8.0.html
 * Download Hibernate and MySQL JDBC Driver and add jar file to the project
