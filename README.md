@@ -310,6 +310,46 @@ Scan the java classes for this special annotations and automatically register th
 Error: "Parameter 0 of constructor in com.rest.DemoController requiered a bean of type 'com.util.Coach' that could no be fount" ocurre when the bean is not part of default package. Resolve add the scan package
 ![list-base-packages-to-scan](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/list-base-packages-to-scan.png "list-base-packages-to-scan")
 
+## Setter injection
+Behind the scene
+![Spring process setter injection](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/setter-injection-process.png "Spring process setter injection")
+1. Define the interface and the dependency class
+```
+public interface Coach {
+    String getDailyWork();
+}
+```
+
+```
+@Component
+public class CricketCoach implements Coach{
+    @Override
+    public String getDailyWork(){
+        return "Practice from CricketCoach";
+    }
+}
+```
+2. Create the REST Controller, with the setter method for injection
+```
+@RestController
+public class DemoController {
+    // define the properties field for the dependency
+    private Coach myCoach;
+
+    // create the setter injection
+    @Autowired
+    public void setCoach(Coach theCoach){
+        myCoach = theCoach;
+    }
+
+    ...
+}
+```
+
+
+
+
+
 
 
 ## Annotations:
@@ -391,17 +431,6 @@ applicationContext.xml
 ![Spring behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-behind.png "Spring behind the scene")
 
 
-
-## Setter injection
-* Create the setter method for injection
-```
-private FortuneService fortuneService;
-
-@Autowired
-public void setFortuneService(FortuneService fortuneService){
-    this.fortuneService = fortuneService;
-}
-```
 * config the dependency for injection in the config file
 ```
 <bean id="myCricketCoach" class="setterinjection.CricketCoach">
@@ -413,7 +442,10 @@ public void setFortuneService(FortuneService fortuneService){
 ---------------------------------------------------------
 ![Setter injection behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/setter-injection-behind.png "Setter injection behind the scene")
 ---------------------------------------------------------
-![Spring process setter injection](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/setter-injection-process.png "Spring process setter injection")
+
+
+
+
 
 ## Qualifiers
 * When have a lot a different classes that implement a injection class and use different @Components how Spring use
