@@ -250,7 +250,7 @@ For this injection Spring will scan for @Components.
 ## Dependency Injection
 Behind the scene:
 ![Spring process](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-process.png "Spring process")
-1. define the dependency inteface and class:
+1. define the dependency interface and class:
     - create a interface
     - create class with the @Component annotations for scanning
 2. create the rest controller, with @RestController
@@ -266,7 +266,7 @@ Behind the scene:
 File: FortuneService.java
 ```
 public interface FortuneService{
-    puclic String getForune();
+    public String getForune();
 }
 ```
 File: HappyFortuneService.java
@@ -345,7 +345,25 @@ public class DemoController {
     ...
 }
 ```
+## Field injection
+It's not recommend to use by the spring.io. It makes the code harder to unit test. 
+```
+@RestController
+public class DemoController{
+    // no deed for constructor or setters, field injection directly
+    @Autowired
+    private Coach myCoach;
 
+    @GetMapping("/daily")
+    ...
+}
+```
+
+## Qualifiers
+* When have multiple classes to implement a injection, use multiple @Components, Spring don't know who need to use:
+![Multiple implementation](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/multiple-implementation.png "Multiple implementation")
+* To resolve this problem is used the @Qualifier annotation
+![Qualifier](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/qualifier.png "Qualifier")
 
 
 
@@ -398,6 +416,7 @@ public class DemoController {
 
 
 
+---------------------------------------------------------
 
 ### Difference between @Controller and @RestController
 * @Controller is used to declare common web controllers which can return HTTP response but @RestController is used to create controllers for REST APIs which can return JSON.
@@ -442,28 +461,13 @@ applicationContext.xml
 ---------------------------------------------------------
 ![Setter injection behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/setter-injection-behind.png "Setter injection behind the scene")
 ---------------------------------------------------------
-
-
-
-
-
-## Qualifiers
-* When have a lot a different classes that implement a injection class and use different @Components how Spring use
-![Multiple implementation](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/multiple-implementation.png "Multiple implementation")
 ---------------------------------------------------------
-![Qualifier](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/qualifier.png "Qualifier")
-```
-	@Autowired
-	@Qualifier("happyFortuneService")
-	private FortuneService fService;
-```
-* Or can do it directly in the constructor
-```
-    @Autowired
-    public DemoController(@Qualifier("baseballCoach") Coach theCoach){
-        myCoach = theCoach;
-    }
-```
+
+
+
+
+
+
 ## @Primary
 * Other alternative to @Qualifier is @Primary
 
