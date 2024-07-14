@@ -366,6 +366,62 @@ public class DemoController{
 ![Qualifier](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/qualifier.png "Qualifier")
 
 
+## @Primary
+* Other alternative to @Qualifier is @Primary. Instead of specifying a coach by name using @Qualifier you specify the primary coach.
+* You can use more than one single @Primary annotation. Error: "Unsatisfield dependency expressed through constructor parameter 0: more than one 'primary' bean found among candidades".  
+```
+@Component
+@Primary
+public class BaseballCoach implements Coach{
+    ...
+}
+```
+
+## Lazy initialization
+* For global configuration add lazy to application.properties 
+'''spring.main.lazy-initialization=true'''
+* Advantages: 
+    * only create objects as needed for dependency injection or is explicitly requested
+    * may help with faster startup time if you have large number of components
+* Disadvantages:
+    * if you have web related components like @RestController, not created until requested
+    * need enough memory for all beans once created
+* It is deseabled by default
+```
+@Component
+@Lazy
+public class BaseballCoach implements Coach{
+    public BaseballCoach(){
+        ...
+    }
+   
+}
+```
+
+## Bean scopes
+* Default scop is singleton
+* Spring Container creates only one instance of the bean, by default and it is cached in memory. All dependency injection for the bean will referenece the same bean
+* The scope of a bean refers to the life cycle of a bean, how long it will exist, how many instances will be created and how the bean will be shared
+![Bean Scopes](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/bean-scopes.png "Bean Scopes")
+```
+Coach theCoach = context.getBean("myCoach", Coach.class);
+Coach alphCoach = context.getBean("myCoach", Coach.class);
+
+// check if the beans are the same		
+boolean result = false;
+result = (theCoach == alphCoach);
+
+System.out.println("Pointing to the same object: " + result);
+System.out.println(theCoach + " / " + alphCoach);
+```
+* Type of scopes
+![Additional Bean Scopes](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/aditional-bean-scopes.png "Additional Bean Scopes")
+* Prototype scope example
+![New injection for each object](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/new-injection-for-each-object.png "New injection for each object")
+* Or we can create a global scope prototype to no longer point to the same bean object
+```
+    <bean id="myCoach" class="beanscopes.BaseballCoach" scope="prototype"></bean>
+```
 
 
 
@@ -466,47 +522,6 @@ applicationContext.xml
 
 
 
-
-
-## @Primary
-* Other alternative to @Qualifier is @Primary
-
-## Lazy initialization
-* With @Lazy bean is only initialized if needed for dependency injection
-* For global configuration add lazy to application.properties '''spring.main.lazy-initialization=true'''
-* Advantages: 
-    * only create objects as needed
-    * may help with faster startup time if you have large number of components
-* Disadvantages:
-    * if you have web related components like @RestController, not created until requested
-    * need enough memory for all beans once created
-* It is deseabled by default
-
-## Bean scopes
-* Default scop is singleton
-* all dependency injection for the bean will referenece the same bean
-* The scope of a bean refers to the life cycle of a bean, how long it will exist, how many instances will be created and how the bean will be shared
-* By default the bean will be singleton type. Singleton type creates a single instance per bean by default, it is stored in cache memory, all requests for this bean will give us a shared reference to the same bean.
-```
-Coach theCoach = context.getBean("myCoach", Coach.class);
-Coach alphCoach = context.getBean("myCoach", Coach.class);
-
-// check if the beans are the same		
-boolean result = false;
-result = (theCoach == alphCoach);
-
-System.out.println("Pointing to the same object: " + result);
-System.out.println(theCoach + " / " + alphCoach);
-```
-* With scope prototype no longer point to the same bean object
-```
-    <bean id="myCoach" class="beanscopes.BaseballCoach" scope="prototype"></bean>
-```
-![Bean Scopes](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/bean-scopes.png "Bean Scopes")
-* Type of scopes
-![Additional Bean Scopes](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/aditional-bean-scopes.png "Additional Bean Scopes")
----------------------------------------------------------
-![New injection for each object](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/new-injection-for-each-object.png "New injection for each object")
 
 ## Bean Lifecycle Methods
 * Custom code can be added during bean initialization or bean destruction
