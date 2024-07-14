@@ -245,8 +245,59 @@ server.servlet.context-path=/home
 * Field injection (not recommended by spring.io)
 
 For dependency injection, Spring can use @Autowired, Spring looking for a class that matches (class or interface) and inject automatically. 
-For this inection Spring will scan for @Components. 
+For this injection Spring will scan for @Components. 
 
+## Dependency Injection
+Behind the scene:
+![Spring process](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-process.png "Spring process")
+1. define the dependency inteface and class:
+    - create a interface
+    - create class with the @Component annotations for scanning
+2. create the rest controller, with @RestController
+3. create a constructor in you class for injections
+    - call to the private class interface
+    - use @Autowired for injection
+4. add getMapping in the controller
+    - use @GetMapping for call the rest
+    - return the injection
+
+## Constructor injection:
+1. Define the interface and the dependency class
+File: FortuneService.java
+```
+public interface FortuneService{
+    puclic String getForune();
+}
+```
+File: HappyFortuneService.java
+```
+@Component
+public class HappyFortuneService implements FortuneService{
+    @Override
+    public String getFortune(){ 
+        return "Today is my lucky day!"
+    }
+}
+```
+2. Create the REST Controller
+```
+@RestController
+public class DemoController{
+    // define a private field for the dependency
+    private Coach myCoach;
+
+    // create the constructor for injection
+    @Autowired
+    public DemoController(Coach theCoach){
+        myCoach = theCoach;
+    }
+
+    @GetMapping("/dailyworkout")
+    public String getDailyWorkout(){
+        return myCoach.getDailyWork();
+    }
+}
+```
 
 
 
@@ -317,38 +368,7 @@ ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("app
 Coach theCoach = context.getBean("myCoach", Coach.class);
 ```
 
-## Constructor injection development process:
-* Define the dependency class and the interface
-File: FortuneService.java
-```
-public interface FortuneService{
-    puclic String getForune();
-}
-```
-File: HappyFortuneService.java
-```
-@Component
-public class HappyFortuneService implements FortuneService{
-    @Override
-    public String getFortune(){ 
-        return "Today is my lucky day!"
-    }
-}
-```
-* Create the REST Controller
-```
-@RestController
-public class DemoController{}
-```
-* Create a constructor in your class for injections 
-```
-private FortuneService fortuneService;
 
-@Autowired
-public BaseballCoach(FortuneService theFortuneService){
-    fortuneService = theFortuneService;
-}
-```
 * Configure the dependency injection in the spring config file, defined in the first step the dependency and in the second step inject the dependency
 applicationContext.xml
 ```
@@ -359,7 +379,7 @@ applicationContext.xml
 ```
 ![Spring behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-behind.png "Spring behind the scene")
 ---------------------------------------------------------
-![Spring process](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-process.png "Spring process")
+
 
 ## Component Scanner
 * Scan the java classes for this special annotations and automatically register the beans in the spring container
