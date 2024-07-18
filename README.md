@@ -470,6 +470,21 @@ public class BaseballCoach implements Coach{
     * Inject the bean in the controller
 ![Inject the bean](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/step3.png "Inject the bean") 
 
+## Annotations Part I:
+* @Override - override the method from the principal class
+* @Component - mark a class like a spring bean and make the bean available for dependency injection
+* @Autowired - allow injecting as a bean after a constructor, method or attribute is created
+* @Qualifier - when there are one or more beans created and you want to use one of them, use this annotation together with @Autowired to specify which bean to use
+* @Primary - to identify the principal bean, it is an alternative to @Qualifier
+* @Lazy - bean is only initialized if needed for dependency injection
+* @Eager - is allwais initialized
+* @Scope - specifies the scope of the bean
+* @PostConstruct - to execute code during bean initialization
+* @PreDestroy - to execute code during bean destruction
+* @Configuration - define a class for bean creation
+* @ComponentScan - indicate in which package to start searching for components
+* @Bean - defines a bean
+
 # Hibernate & JPA
 * Hibernate is a framework for persisting and saving java objects in a database
 * Hibernate provide the object-to-relational mapping ORM
@@ -530,21 +545,65 @@ spring.main.banner-mode=off
 logging.level.root=warn
 ```
 
+## JPA Dev Process
+As mentioned, Hibernate is the default JPA implementation in Spring Boot. 
+* Annotate Java Class
+* Develop Java Code to perform database operations
+* If you don't declare any constructors in Java, Java will privide a no-argument constructor for you
 
-## Annotations:
-* @Override - override the method from the principal class
-* @Component - mark a class like a spring bean and make the bean available for dependency injection
-* @Autowired - allow injecting as a bean after a constructor, method or attribute is created
-* @Qualifier - when there are one or more beans created and you want to use one of them, use this annotation together with @Autowired to specify which bean to use
-* @Primary - to identify the principal bean, it is an alternative to @Qualifier
-* @Lazy - bean is only initialized if needed for dependency injection
-* @Eager - is allwais initialized
-* @Scope - specifies the scope of the bean
-* @PostConstruct - to execute code during bean initialization
-* @PreDestroy - to execute code during bean destruction
-* @Configuration - define a class for bean creation
-* @ComponentScan - indicate in which package to start searching for components
-* @Bean - defines a bean
+
+* Exist two options for mapping
+	* xml config file
+	* java annotations (is more modern)
+* Map class and fields to table and columns
+```
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="student")
+public class Student {
+	@Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
+	private int id;
+	@Column(name="first_name")
+	private String firstName;
+	@Column(name="last_name")
+	private String lastName;
+	@Column(name="email_name")
+	private String email;
+
+	..........
+}
+```
+* @Column is optional but recommandly if you update BBDD column, it's need to be the same name as java field
+
+### About Primary Keys
+* Id generation strategies
+	* GenerationType.AUTO - pick an appropiate strateg for the particular database
+	* GenerationType.IDENTITY - asign primary keys using database identity columns
+	* GenerationType.SEQUENCE - assing primary keys using a database secuence
+	* GenerationType.TABLE - assign primary keys using an underlying database table to ensure uniqueness
+* Data Access Object (DAO):
+    * save()
+    * findById()
+    * findAll()
+    * findByLastName()
+    * update()
+    * delete()
+    * deleteAll()
+![JPA Entity Manager](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/JPA-EntityManager.png "JPA Entity Manager") 
+
+
+
+
+
+
+
+## Annotations Part II:
 * @Controller - inherits from @Component
 * @RequestMapping - used to map URLs to a class or method
 * @RequestParam - get a parameter from the request
@@ -624,57 +683,8 @@ applicationContext.xml
 ---------------------------------------------------------
 
 
+ 
 
-## JPA Dev Process
-* Annotate Java Class
-* Develop Java Code to perform database operations
-* If you don't declare any constructors in Java, Java will privide a no-argument constructor for you
-
-
-* Exist two options for mapping
-	* xml config file
-	* java annotations (is more modern)
-* Map class and fields to table and columns
-```
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="student")
-public class Student {
-	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
-	private int id;
-	@Column(name="first_name")
-	private String firstName;
-	@Column(name="last_name")
-	private String lastName;
-	@Column(name="email_name")
-	private String email;
-
-	..........
-}
-```
-* @Column is optional but recommandly if you update BBDD column
-
-### Primary Keys
-* Id generation strategies
-	* GenerationType.AUTO - pick an appropiate strateg for the particular database
-	* GenerationType.IDENTITY - asign primary keys using database identity columns
-	* GenerationType.SEQUENCE - assing primary keys using a database secuence
-	* GenerationType.TABLE - assign primary keys using an underlying database table to ensure uniqueness
-* Data Access Object (DAO):
-    * save()
-    * findById()
-    * findAll()
-    * findByLastName()
-    * update()
-    * delete()
-    * deleteAll()
-![JPA Entity Manager](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/JPA-EntityManager.png "JPA Entity Manager")  
 ### Dev process for create:
 * Define DAO interface
 ```
