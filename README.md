@@ -429,13 +429,13 @@ Container Shutdown -> your custom destroy method -> stop
 * Custom code can be added during bean initialization or bean destruction
 * `init-method` is the method to initialize an action during bean initialization
 * `destroy-method` is the method to initialize an action during bean destruction
-* We can do this on globaly
+* We can do this on globally
 ```
 <bean id="myCoach" class="beanlifecycle.TrackCoach" 
 	init-method="doInitMethod" destroy-method="doDestroyMehtod">
 </bean>
 ```
-* Or separarly, by class
+* Or separately, by class
 ```
 @Component
 public class BaseballCoach implements Coach{
@@ -470,6 +470,65 @@ public class BaseballCoach implements Coach{
     * Inject the bean in the controller
 ![Inject the bean](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/step3.png "Inject the bean") 
 
+# Hibernate & JPA
+* Hibernate is a framework for persisting and saving java objects in a database
+* Hibernate provide the object-to-relational mapping ORM
+* In Spring Boot, Hibernate is de default implementation of JPA (Jakarta Persistence API)
+* EntityManager is main component for creating queries
+* https://hibernate.org
+* Downloads and install MySQL Database Server: https://dev.mysql.com/downloads/mysql/
+* Downloads and install MySQL Workbench: https://dev.mysql.com/downloads/workbench/
+* Download Hibernate and MySQL JDBC Driver and add jar file to the project
+	* https://sourceforge.net/projects/hibernate/files/hibernate-orm/5.6.5.Final/hibernate-release-5.6.5.Final.zip/download
+	* https://dev.mysql.com/downloads/connector/j/ >> choose the connector for a "platform independent"
+* Based on entries from Maven pom file: MySQL JDBC driver (mysql-connector-j) and Spring Data JPA (ORM) (spring-boot-starter-data-jpa)
+### Development Process 1
+* Add hibernate configuration file, placed in the src folder
+```
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <!-- JDBC Database connection settings -->
+        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/hb_student_tracker?useSSL=false&amp;serverTimezone=UTC</property>
+        <property name="connection.username">hbstudent</property>
+        <property name="connection.password">hbstudent</property>
+
+        <!-- JDBC connection pool settings ... using built-in test pool -->
+        <property name="connection.pool_size">1</property>
+
+        <!-- Select our SQL dialect -->
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <!-- Echo the SQL to stdout -->
+        <property name="show_sql">true</property>
+
+		<!-- Set the current session context -->
+		<property name="current_session_context_class">thread</property>
+    </session-factory>
+</hibernate-configuration>
+```
+### Development Process 2
+* Modify the application.properties:
+![Datasource](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/datasource.png "Datasource")  
+* Command line
+![command-line-app](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/command-line-app.png "command-line-app")  
+* When run the application if the connect to BBDD es correctly we se the messages:
+```
+- Starting...
+- Added connection com.mysql.cj.jdbc.ConnectionImpl@64b7225f
+- Start completed.
+```
+* Tricks
+```
+# Turn of the spring boot banner
+spring.main.banner-mode=off
+# reduce logging level, set to warn
+logging.level.root=warn
+```
 
 
 ## Annotations:
@@ -563,69 +622,9 @@ applicationContext.xml
 ---------------------------------------------------------
 ![Setter injection behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/setter-injection-behind.png "Setter injection behind the scene")
 ---------------------------------------------------------
----------------------------------------------------------
 
 
 
-
-# Hibernate & JPA
-* Hibernate is a framework for persisting and saving java objects in a database
-* Hibernate provide the object-to-relational mapping ORM
-* In Spring Boot, Hibernate is de default implementation of JPA (Jakarta Persistence API)
-* EntityManager is main component for creating queries
-* https://hibernate.org
-* Download and install mysql 8 : https://dev.mysql.com/downloads/windows/installer/8.0.html
-* Download Hibernate and MySQL JDBC Driver and add jar file to the project
-	* https://sourceforge.net/projects/hibernate/files/hibernate-orm/5.6.5.Final/hibernate-release-5.6.5.Final.zip/download
-	* https://dev.mysql.com/downloads/connector/j/ >> choose the connector for a "platform independent"
-* Based on entries from Maven pom file: JDBC driver (mysql-connector-j) and Spring Data (ORM) (spring-boot-starter-data-jpa)
-### Development Process 1
-* Add hibernate configuration file, placed in the src folder
-```
-<!DOCTYPE hibernate-configuration PUBLIC
-        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
-
-<hibernate-configuration>
-    <session-factory>
-        <!-- JDBC Database connection settings -->
-        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://localhost:3306/hb_student_tracker?useSSL=false&amp;serverTimezone=UTC</property>
-        <property name="connection.username">hbstudent</property>
-        <property name="connection.password">hbstudent</property>
-
-        <!-- JDBC connection pool settings ... using built-in test pool -->
-        <property name="connection.pool_size">1</property>
-
-        <!-- Select our SQL dialect -->
-        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
-
-        <!-- Echo the SQL to stdout -->
-        <property name="show_sql">true</property>
-
-		<!-- Set the current session context -->
-		<property name="current_session_context_class">thread</property>
-    </session-factory>
-</hibernate-configuration>
-```
-### Development Process 2
-* Modify the application.properties:
-![Datasource](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/datasource.png "Datasource")  
----------------------------------------------------------
-![command-line-app](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/command-line-app.png "command-line-app")  
-* When run the application if the connect to BBDD es correctly we se the messages:
-```
-- Starting...
-- Added connection com.mysql.cj.jdbc.ConnectionImpl@64b7225f
-- Start completed.
-```
-* Tricks
-```
-# Turn of the spring boot banner
-spring.main.banner-mode=off
-# reduce logging level, set to warn
-logging.level.root=warn
-```
 ## JPA Dev Process
 * Annotate Java Class
 * Develop Java Code to perform database operations
