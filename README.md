@@ -597,7 +597,58 @@ public class Student {
     * deleteAll()
 ![JPA Entity Manager](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/JPA-EntityManager.png "JPA Entity Manager") 
 
+### Saving java object with JPA:
+* Define DAO interface
+```
+public interface StudentDAO {
+    void save(Student theStudent);
+}
+```
+* Define DAO implementation and inject entity manager
+```
+@Repository
+public class StudentDAOImpl implements StudentDAO{
+    // define field for entity manager
+    private EntityManager entityManager;
 
+    // inject entity manager using constructor injection
+    @Autowired // Autowired is optional if you have only one constructor
+    public StudentDAOImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
+    // implement save method
+    @Override
+    @Transactional
+    public void save(Student theStudent) {
+        entityManager.persist(theStudent);
+    }
+}
+```
+* Spring provide @Transactional, that is automatically begin and end a transaction for JPA code, it's no need to explicitly add to the code
+* @Respository automatically register the DAO implementation, thanks to component-scanning and provides translation for any JDBC related exceptions
+
+* Update app
+```
+@Bean
+public CommandLineRunner commandLineRunner(StudentDAO studentDAO){
+    return runner ->{
+        //createStudent(studentDAO);
+        createMultipleStudent(studentDAO);
+    };
+}
+
+private void createStudent(StudentDAO studentDAO) {
+    // create the object
+    Student tempStudent = new Student("Paul", "Doe", "paul@doe.com");
+
+    // save the object
+    studentDAO.save(tempStudent);
+
+    // display id of the object
+    System.out.println("Student saved with id " + tempStudent.getId());
+}
+```
 
 
 
@@ -685,55 +736,7 @@ applicationContext.xml
 
  
 
-### Dev process for create:
-* Define DAO interface
-```
-public interface StudentDAO {
-    void save(Student theStudent);
-}
-```
-* Define DAO implementation and inject entity manager
-```
-@Repository
-public class StudentDAOImpl implements StudentDAO{
-    // define field for entity manager
-    private EntityManager entityManager;
 
-    // inject entity manager using constructor injection
-    @Autowired // Autowired is optional if you have only one constructor
-    public StudentDAOImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
-
-    // implement save method
-    @Override
-    @Transactional
-    public void save(Student theStudent) {
-        entityManager.persist(theStudent);
-    }
-}
-```
-* Update app
-```
-@Bean
-public CommandLineRunner commandLineRunner(StudentDAO studentDAO){
-    return runner ->{
-        //createStudent(studentDAO);
-        createMultipleStudent(studentDAO);
-    };
-}
-
-private void createStudent(StudentDAO studentDAO) {
-    // create the object
-    Student tempStudent = new Student("Paul", "Doe", "paul@doe.com");
-
-    // save the object
-    studentDAO.save(tempStudent);
-
-    // display id of the object
-    System.out.println("Student saved with id " + tempStudent.getId());
-}
-```
 ### Dev process for read
 * Add DAO interface
 ```
