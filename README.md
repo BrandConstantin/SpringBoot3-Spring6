@@ -765,6 +765,93 @@ public class Application {
 }
 ```
 
+### Updating objects with JPA
+![Update](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/update-jpql.png "Update") 
+* Add DAO interface
+```
+public interface StudentDAO {   
+    void update(Student theStudent);
+}
+```
+* Add DAO implementation
+```
+@Repository
+public class StudentDAOImpl implements StudentDAO{
+    // define field for entity manager
+    private EntityManager entityManager;
+
+    @Override
+    @Transactional
+    public void update(Student theStudent) {
+        entityManager.merge(theStudent);
+    }
+}
+```
+* Update app
+```
+private void updateStudent(StudentDAO studentDAO) {
+    // retrive student bases on the id
+    int studentId = 1;
+    Student myStudent = studentDAO.findById(studentId);
+    
+    // change a column
+    myStudent.setFirstName("Scooby");
+    
+    // update the student
+    studentDAO.update(myStudent);
+    
+    // display the updated student
+    System.out.println(myStudent);
+}
+```
+### Deleting a object with JPA
+* For multiple delete 
+![Multiple delete](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/delete-multiple.png "Multiple delete") 
+* Add DAO interface
+```
+void delete(Integer id);
+```
+* Add DAO implementation
+```
+@Override
+@Transactional
+public void delete(Integer id) {
+    // retrive the student
+    Student theStudent = entityManager.find(Student.class, id);
+
+    // delete the student
+    entityManager.remove(theStudent);
+}
+```
+* Update app
+```
+@SpringBootApplication
+public class Application {
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
+	}
+
+	@Bean
+	public CommandLineRunner commandLineRunner(StudentDAO studentDAO){
+		return runner ->{
+			deleteStudent(studentDAO);
+		};
+	}
+
+	private void deleteStudent(StudentDAO studentDAO) {
+		int studentId = 3;
+		studentDAO.delete(studentId);
+	}
+}
+```
+
+## Create table with JPA
+* provides an option to automagically create database table
+* It's need to add to application.properties ```spring.jpa.hibernate.ddl-auto=create``` 
+* JPA drop and then create the table, all data lose it. Don't use this in production
+![ddl-auto](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/ddl-auto.png "ddl-auto") 
+
+
 
 
 ## Annotations Part II:
@@ -852,90 +939,8 @@ applicationContext.xml
 
 
 
-### Dev process JPQL update
-![Update](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/update-jpql.png "Update") 
-* Add DAO interface
-```
-public interface StudentDAO {   
-    void update(Student theStudent);
-}
-```
-* Add DAO implementation
-```
-@Repository
-public class StudentDAOImpl implements StudentDAO{
-    // define field for entity manager
-    private EntityManager entityManager;
 
-    @Override
-    @Transactional
-    public void update(Student theStudent) {
-        entityManager.merge(theStudent);
-    }
-}
-```
-* Update app
-```
-private void updateStudent(StudentDAO studentDAO) {
-    // retrive student bases on the id
-    int studentId = 1;
-    Student myStudent = studentDAO.findById(studentId);
-    
-    // change a column
-    myStudent.setFirstName("Scooby");
-    
-    // update the student
-    studentDAO.update(myStudent);
-    
-    // display the updated student
-    System.out.println(myStudent);
-}
-```
-### Dev process JPQL delete
-* For multiple delete 
-![Multiple delete](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/delete-multiple.png "Multiple delete") 
-* Add DAO interface
-```
-void delete(Integer id);
-```
-* Add DAO implementation
-```
-@Override
-@Transactional
-public void delete(Integer id) {
-    // retrive the student
-    Student theStudent = entityManager.find(Student.class, id);
 
-    // delete the student
-    entityManager.remove(theStudent);
-}
-```
-* Update app
-```
-@SpringBootApplication
-public class Application {
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
-
-	@Bean
-	public CommandLineRunner commandLineRunner(StudentDAO studentDAO){
-		return runner ->{
-			deleteStudent(studentDAO);
-		};
-	}
-
-	private void deleteStudent(StudentDAO studentDAO) {
-		int studentId = 3;
-		studentDAO.delete(studentId);
-	}
-}
-```
-## Create table with JPA
-* provides an option to automagically create database table
-* It's need to add to application.properties ```spring.jpa.hibernate.ddl-auto=create``` 
-* JPA drop and then create the table, all data lose it. Don't use this in production
-![ddl-auto](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/ddl-auto.png "ddl-auto") 
 
 # Spring Boot - REST CRUD APIs
 * REST is a language independent, calls can be made over HTTP
