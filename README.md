@@ -850,9 +850,7 @@ public class Application {
 * It's need to add to application.properties ```spring.jpa.hibernate.ddl-auto=create``` 
 * JPA drop and then create the table, all data lose it. Don't use this in production
 ![ddl-auto](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/ddl-auto.png "ddl-auto") 
-
-
-
+![logging-config](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/logging-config.png "logging-config") 
 
 ## Annotations Part II:
 * @Controller - inherits from @Component
@@ -868,6 +866,8 @@ public class Application {
 * @Table - to specify the database table
 * @Column - indicate the database column
 * @Id - pk of a table
+
+## Annotations Part III:
 * @OneToOne
 * @OneToMany
 * @ManyToOne
