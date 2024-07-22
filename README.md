@@ -905,9 +905,10 @@ public class Instructor{
 }
 ...
 @Entity
-@Table(name="instructor)
-public class Instructor{
-    @OneToOne(mappedBy="instructorDetail", cascade= {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+@Table(name="instructor_detail")
+public class InstructorDetail {
+    @OneToOne(mappedBy="instructorDetail", cascade= {CascadeType.DETACH, CascadeType.MERGE, 
+                        CascadeType.PERSIST, CascadeType.REFRESH})
     private Instructor instructor;  
 }
 ```
@@ -920,27 +921,30 @@ public class Instructor{
 
 * ### @OneToMany - use to relation a column from a table with the many foreign key from another table
 ```
-@OneToMany(fetch=FetchType.EAGER, mappedBy="instructor")
-private List<Course> courses;
-
-public void add(Course tempCourse) {
-    if(courses == null) {
-        courses = new ArrayList<>();
-    }
-    
-    courses.add(tempCourse);
-    tempCourse.setInstructor(this);
-    
+@Entity
+@Table(name="course")
+public class Course {
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+			            CascadeType.DETACH, CascadeType.REFRESH})
+	@JoinColumn(name="instructor_id")
+	private Instructor instructor;
+}
+...
+@Entity
+@Table(name="instructor")
+public class Instructor {
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="instructor", 
+			cascade = {CascadeType.DETACH, CascadeType.MERGE,CascadeType.PERSIST, CascadeType.REFRESH})
+	private List<Course> courses;
 }
 ```
 ### Eager vs Lazy loading
 * eager will retrive everything
 * lazy will retrive on request
-* only load data when absolutely needes, so prefer lazy loading instead of eager loading
+* to best practice only load data when absolutely needes, so prefer lazy loading instead of eager loading
 ![Eager Loading](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/eager-loading.png "Eager Loading")
 * The best practice is load data when absolutely needed, prefer use lazy loading
-* How resolve the Lazy loading
-    * use hibernate query with HQL
+* How resolve the Lazy loading using hibernate query language - HQL
 ```
     // start a transaction
     session.beginTransaction();
@@ -966,23 +970,44 @@ public void add(Course tempCourse) {
     session.getTransaction().commit();
     
     session.close();
+
+    ...
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="instructor")
+	private List<Course> courses;
 ```
-* @OneToMany
-```
-@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-@JoinColumn(name="course_id")
-private List<Review> reviews;
-```
-@ManyToMany
+Default Fech Type
+@OneToOne - FetchType.EAGER
+@OneToMany - FetchType.LAZY
+@ManyToOne - FetchType.EAGER
+@ManyToMany - FetchType.LAZY
+
+### @ManyToMany
 * @ManyToMany use @JoinTable and @JoinColumn
 ```
-@ManyToMany(fetch = FetchType.LAZY,
-        cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-        CascadeType.DETACH, CascadeType.REFRESH})
-@JoinTable(name="course_student",
-        joinColumns = @JoinColumn(name="course_id"),
-        inverseJoinColumns = @JoinColumn(name="student_id"))
-private List<Student> students;
+@Entity
+@Table(name="course")
+public class Course {
+	@ManyToMany(fetch = FetchType.LAZY,
+			cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.DETACH, CascadeType.REFRESH})
+	@JoinTable(name="course_student",
+			joinColumns = @JoinColumn(name="course_id"),
+			inverseJoinColumns = @JoinColumn(name="student_id"))
+	private List<Student> students;
+}
+...
+@Entity
+@Table(name="student")
+public class Student {
+	@ManyToMany(fetch = FetchType.LAZY,
+			cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.DETACH, CascadeType.REFRESH})
+	@JoinTable(name="course_student",
+			joinColumns = @JoinColumn(name="student_id"),
+			inverseJoinColumns = @JoinColumn(name="course_id"))
+    private List<Course> courses;
+}
 ```
 
 [Hibernate Advanced Project](https://github.com/BrandConstantin/SpringBoot3-Spring6/tree/main/12-Hibernate-Advanced-Mapping)
@@ -991,7 +1016,23 @@ private List<Student> students;
 * @OneToOne
 * @OneToMany
 * @ManyToOne
-* @ManyToMany    
+* @ManyToMany   
+* @JoinTable
+* @JoinColumn 
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Annotations Part IV:
 * @PostMapping
 * @GetMapping
 * @PutMapping
