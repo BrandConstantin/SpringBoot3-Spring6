@@ -977,10 +977,10 @@ public class Instructor {
 	private List<Course> courses;
 ```
 Default Fech Type
-@OneToOne - FetchType.EAGER
-@OneToMany - FetchType.LAZY
-@ManyToOne - FetchType.EAGER
-@ManyToMany - FetchType.LAZY
+- @OneToOne - FetchType.EAGER
+- @OneToMany - FetchType.LAZY
+- @ManyToOne - FetchType.EAGER
+- @ManyToMany - FetchType.LAZY
 
 ### @ManyToMany
 * @ManyToMany use @JoinTable and @JoinColumn
@@ -1020,6 +1020,14 @@ public class Student {
 * @JoinTable
 * @JoinColumn 
 
+## Spring Boot REST -> a REST CRUD APIs
+* REST is a language independent, calls can be made over HTTP
+![Rest](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Rest.png "Rest") 
+---------------------------------------------------------
+![CRUD operations](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/crud-operations.png "CRUD operations") 
+* HTTP Response
+![HTTP Response](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/http-response.png "HTTP Response") 
+
 
 
 
@@ -1056,7 +1064,7 @@ public class Student {
 * The @Controller is a common annotation which is used to mark a class as Spring MVC Controller while the @RestController is a special controller used in RESTFul web services
 
 
-## Spring development process:
+### Spring development process:
 * Configuration of a spring bean
 ```
 <bean id="myCoach" class="inversionOfControl.TrackCoach"></bean>
@@ -1103,15 +1111,9 @@ applicationContext.xml
 
 
 
-# Spring Boot - REST CRUD APIs
-* REST is a language independent, calls can be made over HTTP
-![Rest](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Rest.png "Rest") 
----------------------------------------------------------
-![CRUD operations](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/crud-operations.png "CRUD operations") 
-* HTTP Response
-![HTTP Response](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/http-response.png "HTTP Response") 
 
-## Spring REST controller
+
+### Spring REST controller
 ```
 @RestController
 @RequestMapping("/test")
@@ -1122,7 +1124,7 @@ public class DemoRestController {
     }
 }
 ```
-## JSON Data Binding
+### JSON Data Binding
 * Data binding is the process of converting JSON to a Java POJO
 * This process is also known as mapping, serialization / deserialization, mashalling / unmarshalling
 * Convert JSON to Java POJO, call setter methods on POJO
@@ -1131,7 +1133,7 @@ public class DemoRestController {
 * Convert Java POJO to JSON, call getter methods on POJO
 ![Getter methods POJO](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/getter-methods-pojo.png "Getter methods POJO")
 
-## Spring REST Service process
+### Spring REST Service process
 * Create java POJO class, the Entity
 * Create Spring REST Service using @RestController
 ```
@@ -1150,7 +1152,7 @@ public class StrudentController {
     }
 }
 ```
-## Path Variable
+### Path Variable
 * Retravie a single row
 ```
 @GetMapping("/students/{id}")
@@ -1158,8 +1160,8 @@ public Student getStudent(@PathVariable int id){
     return theStudents.get(id);
 }
 ```
-## Exception Handling
-### Dev process
+### Exception Handling
+#### Dev process
 * Create custom error response class
 ```
 public class StudentErrorResponse {
@@ -1255,11 +1257,11 @@ public ResponseEntity<StudentErrorResponse> handleException(Exception exc){
 }
 ```
 
-## Global exception handling
+### Global exception handling
 * @ControllerAdvice is similar to an filter
     * pre-process requests to controllers
     * pre-process responses to handle exception
-### Dev process
+#### Dev process
 * Create new @ControllerAdvice
 * Add exception code to @ControllerAdvice
 * Refact the code
