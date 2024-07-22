@@ -20,6 +20,8 @@ https://start.spring.io/
 ![spring-boot-contains](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-boot-contains.png "spring-boot-contains")
 ![initialzr](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/initialzr.png "initialzr")
 
+[Spring Initializr Project](https://github.com/BrandConstantin/SpringBoot3-Spring6/tree/main/01-SpringBoot-Initialzr)
+
 ## Spring Framework
 * Core Container contains: Beans -> Core -> SpEL -> Context
 * Infrastructure contains: AOP -> Aspects -> Instrumentation -> Messaging
@@ -98,6 +100,8 @@ Use only what you need.
 * then go to Settings > Build, Execution, Deployment > Compiler > check box Build project automatically
 * additional Settings > Advanced settings > check box Allow auto-make to start even if developed application is currently running
 
+[Spring Boot Dev Tools Project](https://github.com/BrandConstantin/SpringBoot3-Spring6/tree/main/02-SpringBoot-DevTools)
+
 ## Spring Boot Actuator
 * it use to expose to monitor and manage the endpoints of application, to check the health of application
 * add the REST endpoints automatically to application
@@ -169,6 +173,8 @@ info.app.description=Learning Spring Boot
 info.app.version=1.0
 info.app.lesson=Actuator
 ```
+
+[Spring Boot Actuator Project](https://github.com/BrandConstantin/SpringBoot3-Spring6/tree/main/03-SpringBoot-Actuator)
 
 ## Spring Boot from command line
 * You don't need to have a server install or a IDE
@@ -469,6 +475,8 @@ public class BaseballCoach implements Coach{
 ![@Bean Method](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/step2.png "@Bean Method")  
     * Inject the bean in the controller
 ![Inject the bean](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/step3.png "Inject the bean") 
+
+[Inversion of Control Project](https://github.com/BrandConstantin/SpringBoot3-Spring6/tree/main/04-Spring%20Injection%20%26%20Inversion%20Of%20Control)
 
 ## Annotations Part I:
 * @Override - override the method from the principal class
@@ -852,6 +860,8 @@ public class Application {
 ![ddl-auto](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/ddl-auto.png "ddl-auto") 
 ![logging-config](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/logging-config.png "logging-config") 
 
+[Spring Hibernate & JPA Project](https://github.com/BrandConstantin/SpringBoot3-Spring6/tree/main/05-Hibernate%20%26%20JPA)
+
 ## Annotations Part II:
 * @Controller - inherits from @Component
 * @RequestMapping - used to map URLs to a class or method
@@ -865,7 +875,117 @@ public class Application {
 * @Service - intermediate layer for custom business logic, can integrate multiple repositories/DAO and use Service Facade design pattern
 * @Table - to specify the database table
 * @Column - indicate the database column
-* @Id - pk of a table
+* @Id - primary key of a table
+
+## Hibernate advanced mapping
+### Entity lifecycle
+![Session method calls](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/session-method-calls.png "Session method calls")
+---------------------------------------------------------
+![Cascade-Type](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Cascade-Type.png "Cascade-Type")
+
+* ### @OneToOne - use to relation a column from a table with the foreign key from another table
+```
+@Entity
+@Table(name="instructor)
+public class Instructor{
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="instructor_detail_id")
+    private InstructorDetail instructorDetail;   // the foreign key for the InstructorDetail class
+}
+```
+
+* ### @OneToOne - bidirectional
+```
+@Entity
+@Table(name="instructor)
+public class Instructor{
+    @OneToOne(mappedBy="instructorDetail", cascade=CascadeType.ALL)
+    @JoinColumn(name="instructor_detail_id")
+    private InstructorDetail instructorDetail;
+}
+...
+@Entity
+@Table(name="instructor)
+public class Instructor{
+    @OneToOne(mappedBy="instructorDetail", cascade= {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private Instructor instructor;  
+}
+```
+![OneToOne-bidirectional](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/OneToOne-bidirectional.png "OneToOne-bidirectional")
+* Delete details but not the instructor with this line
+```
+@OneToOne(mappedBy="instructorDetail", cascade= {CascadeType.DETACH, CascadeType.MERGE,
+                                        CascadeType.PERSIST, CascadeType.REFRESH})
+```
+
+* ### @OneToMany - use to relation a column from a table with the many foreign key from another table
+```
+@OneToMany(fetch=FetchType.EAGER, mappedBy="instructor")
+private List<Course> courses;
+
+public void add(Course tempCourse) {
+    if(courses == null) {
+        courses = new ArrayList<>();
+    }
+    
+    courses.add(tempCourse);
+    tempCourse.setInstructor(this);
+    
+}
+```
+### Eager vs Lazy loading
+* eager will retrive everything
+* lazy will retrive on request
+* only load data when absolutely needes, so prefer lazy loading instead of eager loading
+![Eager Loading](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/eager-loading.png "Eager Loading")
+* The best practice is load data when absolutely needed, prefer use lazy loading
+* How resolve the Lazy loading
+    * use hibernate query with HQL
+```
+    // start a transaction
+    session.beginTransaction();
+    
+    // resolve lazy loading
+    // option 2 hibernate query with HQL
+    
+    // get the instructor from db
+    int theId = 1;
+    Query<Instructor> query = session.createQuery("select i from Instructor i " +
+            " JOIN FETCH i.courses " + 
+            " where i.id=:theInstructorId",Instructor.class);
+    
+    query.setParameter("theInstructorId", theId);
+    
+    // execute query and get the instructor
+    Instructor tempInstructor = query.getSingleResult();
+    
+    // get courses of the instructor
+    System.out.println("Courses: " + tempInstructor);
+    
+    // commit transaction
+    session.getTransaction().commit();
+    
+    session.close();
+```
+* @OneToMany
+```
+@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+@JoinColumn(name="course_id")
+private List<Review> reviews;
+```
+@ManyToMany
+* @ManyToMany use @JoinTable and @JoinColumn
+```
+@ManyToMany(fetch = FetchType.LAZY,
+        cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+        CascadeType.DETACH, CascadeType.REFRESH})
+@JoinTable(name="course_student",
+        joinColumns = @JoinColumn(name="course_id"),
+        inverseJoinColumns = @JoinColumn(name="student_id"))
+private List<Student> students;
+```
+
+[Hibernate Advanced Project](https://github.com/BrandConstantin/SpringBoot3-Spring6/tree/main/12-Hibernate-Advanced-Mapping)
 
 ## Annotations Part III:
 * @OneToOne
@@ -1816,97 +1936,7 @@ public class CourseCodeConstraintValidator implements ConstraintValidator<Course
 * Display the errors in html 
 
 
-# Hibernate advanced mapping
-### Entity lifecycle
-![Entity lifecycle](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/entity-lifecycle.png "Entity lifecycle")
----------------------------------------------------------
-![Session method calls](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/session-method-calls.png "Session method calls")
----------------------------------------------------------
-![Cascade-Type](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/Cascade-Type.png "Cascade-Type")
 
-* @OneToOne - use to relation a column from a table with the foreign key from another table
-```
-@OneToOne(cascade=CascadeType.ALL)
-@JoinColumn(name="instructor_detail_id")
-private InstructorDetail instructorDetail;
-```
-* @OneToOne - bidirectional
-```
-@OneToOne(mappedBy="instructorDetail", cascade=CascadeType.ALL)
-private Instructor instructor;
-```
-![OneToOne-bidirectional](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/OneToOne-bidirectional.png "OneToOne-bidirectional")
-* Delete details but not the instructor
-```
-@OneToOne(mappedBy="instructorDetail", cascade= {CascadeType.DETACH, CascadeType.MERGE,
-                                        CascadeType.PERSIST, CascadeType.REFRESH})
-```
-* @OneToMany - use to relation a column from a table with the many foreign key from another table
-```
-@OneToMany(fetch=FetchType.EAGER, mappedBy="instructor")
-private List<Course> courses;
-
-public void add(Course tempCourse) {
-    if(courses == null) {
-        courses = new ArrayList<>();
-    }
-    
-    courses.add(tempCourse);
-    tempCourse.setInstructor(this);
-    
-}
-```
-## Eager vs Lazy loading
-* eager will retrive everything
-* lazy will retrive on request
-* only load data when absolutely needes, so prefer lazy loading instead of eager loading
-![Eager Loading](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/eager-loading.png "Eager Loading")
-* The best practice is load data when absolutely needed, prefer use lazy loading
-* How resolve the Lazy loading
-    * use hibernate query with HQL
-```
-    // start a transaction
-    session.beginTransaction();
-    
-    // resolve lazy loading
-    // option 2 hibernate query with HQL
-    
-    // get the instructor from db
-    int theId = 1;
-    Query<Instructor> query = session.createQuery("select i from Instructor i " +
-            " JOIN FETCH i.courses " + 
-            " where i.id=:theInstructorId",Instructor.class);
-    
-    query.setParameter("theInstructorId", theId);
-    
-    // execute query and get the instructor
-    Instructor tempInstructor = query.getSingleResult();
-    
-    // get courses of the instructor
-    System.out.println("Courses: " + tempInstructor);
-    
-    // commit transaction
-    session.getTransaction().commit();
-    
-    session.close();
-```
-* @OneToMany
-```
-@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-@JoinColumn(name="course_id")
-private List<Review> reviews;
-```
-@ManyToMany
-* @ManyToMany use @JoinTable and @JoinColumn
-```
-@ManyToMany(fetch = FetchType.LAZY,
-        cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-        CascadeType.DETACH, CascadeType.REFRESH})
-@JoinTable(name="course_student",
-        joinColumns = @JoinColumn(name="course_id"),
-        inverseJoinColumns = @JoinColumn(name="student_id"))
-private List<Student> students;
-```
 # Create a Dynamic Web Project with Eclipse
 ### Dev environment:
 * You should have installed: apache tomcat, eclipse java EE version, and connect eclipse to tomacat
