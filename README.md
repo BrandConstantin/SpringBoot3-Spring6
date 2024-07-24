@@ -1028,7 +1028,50 @@ public class Student {
 * HTTP Response
 ![HTTP Response](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/http-response.png "HTTP Response") 
 
+### Spring REST controller
+```
+@RestController
+@RequestMapping("/test")
+public class DemoRestController {
 
+    @GetMapping("/hello")
+    public String sayHello(){
+        return "Hello World";
+    }
+}
+```
+To start a project for REST CRUD we need from initializr spring web. 
+
+### JSON Data Binding
+* Data binding is the process of converting JSON to a Java POJO
+* This process is also known as mapping, serialization / deserialization, mashalling / unmarshalling
+* Convert JSON to Java POJO, call setter methods on POJO
+![Setter methods POJO](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/setter-methods-pojo.png "Setter methods POJO")
+---------------------------------------------------------
+* Convert Java POJO to JSON, call getter methods on POJO
+REST Client -> /api/students -> Spring REST (Jackson)               -> REST Service
+REST Client <-               <- Jackos will convert to a JSON array <- will return a List<Stundent> <- REST Service
+
+#### Spring Boot REST POJO process
+* Create java POJO class, the Entity
+* Create Spring REST Service using @RestController
+```
+@RestController
+@RequestMapping("/api")
+public class StrudentController {
+    
+    @GetMapping("/students")
+    public List<Student> getStudents(){
+        List<Student> theStudents = new ArrayList<>();
+
+        theStudents.add(new Student("Pepe", "Percival"));
+        theStudents.add(new Student("María Luisa", "Nazaret"));
+        theStudents.add(new Student("Jesolu", "Xaviter"));
+
+        return theStudents;
+    }
+}
+```
 
 
 
@@ -1112,46 +1155,6 @@ applicationContext.xml
 
 
 
-
-### Spring REST controller
-```
-@RestController
-@RequestMapping("/test")
-public class DemoRestController {
-    @GetMapping("/hello")
-    public String sayHello(){
-        return "Hello World";
-    }
-}
-```
-### JSON Data Binding
-* Data binding is the process of converting JSON to a Java POJO
-* This process is also known as mapping, serialization / deserialization, mashalling / unmarshalling
-* Convert JSON to Java POJO, call setter methods on POJO
-![Setter methods POJO](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/setter-methods-pojo.png "Setter methods POJO")
----------------------------------------------------------
-* Convert Java POJO to JSON, call getter methods on POJO
-![Getter methods POJO](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/getter-methods-pojo.png "Getter methods POJO")
-
-### Spring REST Service process
-* Create java POJO class, the Entity
-* Create Spring REST Service using @RestController
-```
-@RestController
-@RequestMapping("/api")
-public class StrudentController {
-    @GetMapping("/students")
-    public List<Student> getStudents(){
-        List<Student> theStudents = new ArrayList<>();
-
-        theStudents.add(new Student("Pepe", "Percival"));
-        theStudents.add(new Student("María Luisa", "Nazaret"));
-        theStudents.add(new Student("Jesolu", "Xaviter"));
-
-        return theStudents;
-    }
-}
-```
 ### Path Variable
 * Retravie a single row
 ```
