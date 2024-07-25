@@ -1073,7 +1073,14 @@ public class StrudentController {
 }
 ```
 
-
+### Path Variable
+* Retravie a single row
+```
+@GetMapping("/students/{id}")
+public Student getStudent(@PathVariable int id){
+    return theStudents.get(id);
+}
+```
 
 
 
@@ -1155,16 +1162,8 @@ applicationContext.xml
 
 
 
-### Path Variable
-* Retravie a single row
-```
-@GetMapping("/students/{id}")
-public Student getStudent(@PathVariable int id){
-    return theStudents.get(id);
-}
-```
+
 ### Exception Handling
-#### Dev process
 * Create custom error response class
 ```
 public class StudentErrorResponse {
