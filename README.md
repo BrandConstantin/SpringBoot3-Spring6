@@ -1082,6 +1082,102 @@ public Student getStudent(@PathVariable int id){
 }
 ```
 
+### Exception Handling
+* Create custom error response class
+```
+public class StudentErrorResponse {
+    private int status;
+    private String message;
+    private long timeStamp;
+
+    public StudentErrorResponse() {    }
+
+    public StudentErrorResponse(int status, String message, long timeStamp) {
+        this.status = status;
+        this.message = message;
+        this.timeStamp = timeStamp;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+}
+```
+* Create custom exception class
+```
+public class StudentNotFoundException extends RuntimeException{
+    public StudentNotFoundException(String message) {
+        super(message);
+    }
+
+    public StudentNotFoundException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public StudentNotFoundException(Throwable cause) {
+        super(cause);
+    }
+}
+```
+* Update REST service to throw the exception
+```
+@GetMapping("/students/{id}")
+public Student getStudent(@PathVariable int id){
+    // check the object exist
+    if(id >= theStudents.size() || id < 0){
+        throw new StudentNotFoundException("Student id not found - " + id);
+    }
+    // index the list
+    return theStudents.get(id);
+}
+```
+* Add exception handler methods in the rest controller
+```
+@ExceptionHandler
+public ResponseEntity<StudentErrorResponse> handleException(StudentErrorResponse exc){
+    // create a error response
+    StudentErrorResponse error = new StudentErrorResponse();
+    error.setStatus(HttpStatus.NOT_FOUND.value());
+    error.setMessage(exc.getMessage());
+    error.setTimeStamp(System.currentTimeMillis());
+    
+    // return entity
+    return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+}
+@ExceptionHandler // to cover all the exception
+public ResponseEntity<StudentErrorResponse> handleException(Exception exc){
+    // create a error response
+    StudentErrorResponse error = new StudentErrorResponse();
+
+    error.setStatus(HttpStatus.BAD_REQUEST.value());
+    error.setMessage(exc.getMessage());
+    error.setTimeStamp(System.currentTimeMillis());
+
+    // return entity
+    return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+}
+```
+
 
 
 
@@ -1163,101 +1259,7 @@ applicationContext.xml
 
 
 
-### Exception Handling
-* Create custom error response class
-```
-public class StudentErrorResponse {
-    private int status;
-    private String message;
-    private long timeStamp;
 
-    public StudentErrorResponse() {    }
-
-    public StudentErrorResponse(int status, String message, long timeStamp) {
-        this.status = status;
-        this.message = message;
-        this.timeStamp = timeStamp;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public long getTimeStamp() {
-        return timeStamp;
-    }
-
-    public void setTimeStamp(long timeStamp) {
-        this.timeStamp = timeStamp;
-    }
-}
-```
-* Create custom exception
-```
-public class StudentNotFoundException extends RuntimeException{
-    public StudentNotFoundException(String message) {
-        super(message);
-    }
-
-    public StudentNotFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public StudentNotFoundException(Throwable cause) {
-        super(cause);
-    }
-}
-```
-* Update REST service to throw exception
-```
-@GetMapping("/students/{id}")
-public Student getStudent(@PathVariable int id){
-    // check the object exist
-    if(id >= theStudents.size() || id < 0){
-        throw new StudentNotFoundException("Student id not found - " + id);
-    }
-    // index the list
-    return theStudents.get(id);
-}
-```
-* Add exception handler method
-```
-@ExceptionHandler
-public ResponseEntity<StudentErrorResponse> handleException(StudentErrorResponse exc){
-    // create a error response
-    StudentErrorResponse error = new StudentErrorResponse();
-    error.setStatus(HttpStatus.NOT_FOUND.value());
-    error.setMessage(exc.getMessage());
-    error.setTimeStamp(System.currentTimeMillis());
-    
-    // return entity
-    return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-}
-@ExceptionHandler // to cover all the exception
-public ResponseEntity<StudentErrorResponse> handleException(Exception exc){
-    // create a error response
-    StudentErrorResponse error = new StudentErrorResponse();
-
-    error.setStatus(HttpStatus.BAD_REQUEST.value());
-    error.setMessage(exc.getMessage());
-    error.setTimeStamp(System.currentTimeMillis());
-
-    // return entity
-    return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-}
-```
 
 ### Global exception handling
 * @ControllerAdvice is similar to an filter
