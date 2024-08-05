@@ -1177,8 +1177,123 @@ public ResponseEntity<StudentErrorResponse> handleException(Exception exc){
     return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 }
 ```
+### Global exception handling
+* @ControllerAdvice is similar to an filter
+    * pre-process requests to controllers
+    * pre-process responses to handle exception
+#### Dev process
+* Create new @ControllerAdvice
+* Remove exception handling
+* Add exception handler to @ControllerAdvice
+* Refact the code
+```
+@ControllerAdvice
+public class StudentRestExceptionHandler {
+    // add an exception handler using @ExceptionHandler
+    @ExceptionHandler
+    public ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundException exc){
+        // create a error response
+        StudentErrorResponse error = new StudentErrorResponse();
+
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+        error.setMessage(exc.getMessage());
+        error.setTimeStamp(System.currentTimeMillis());
+
+        // return entity
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<StudentErrorResponse> handleException(Exception exc){
+        // create a error response
+        StudentErrorResponse error = new StudentErrorResponse();
+
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        error.setMessage(exc.getMessage()); // se puede cambiar con mensaje personalizado
+        error.setTimeStamp(System.currentTimeMillis());
+
+        // return entity
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+}
+```
+## Spring Boot REST 
+### API Design
+1. REST client should be able to get a list of employee, get a single employee, add a new employee, update or delete
+2. Indentify the entitys using noun
+3. Use HTTP methods to assing action on resource (GET, POST, PUT, DELETE)
+![Real Time Project](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/real-time-project.png "Real Time Project")
+* Don't use the anti-patters, is a bad practice, for endpoints like: /api/addEmployee, /api/deleteEmployee etc
+* @Service, like @Repository and @RestController, is an annotation that provide Spring
+#### Dev process for GET:
+* Inport from Spring Initializr: Spring Web, Spring Data JPA, Spring Boot Dev Tools, MySQL Driver
+* JPA DAO: create the interface DAO and the implementation
+```
+@Repository
+public class EmployeeDAOImpl implements EmployeeDAO{
+    // define entityManager and his constructor
+    private EntityManager entityManager;
+
+    @Autowired
+    public EmployeeDAOImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+    ....
+}
+```
+* Get list of employee with DAO implementation and his method
+```
+@Override
+public List<Employee> findAll() {
+    // create a query
+    TypedQuery<Employee> theQuery = entityManager.createQuery("FROM Employee", Employee.class);
+
+    // execute the query
+    List<Employee> employees = theQuery.getResultList();
+
+    // return result
+    return employees;
+}
+```
+* Crate the controller and inject the DAO
+```
+@RestController
+@RequestMapping("/api")
+public class EmployeeController {
+    private EmployeeService employeeService;
+
+    // inject object 
+    @Autowired
+    public EmployeeController(EmployeeService theEmployeeService) {
+        employeeService = theEmployeeService;
+    }
 
 
+    // expose the endpoint to return the list
+    @GetMapping("/employees")
+    public List<Employee> findAll(){
+        return employeeDAO.findAll();
+    }
+}
+```
+* Define one single Service interface thet integrate multiple data source (multiple DAOs). Spring provides the @Service annotation.
+* Define Service implementation and inject the DAO impl
+```
+@Service
+public class EmployeeServiceImpl implements EmployeeService{
+    private EmployeeDAO employeeDAO;
+
+    @Autowired
+    public EmployeeServiceImpl(EmployeeDAO theEmployeeDAO) {
+        this.employeeDAO = theEmployeeDAO;
+    }
+
+    @Override
+    public List<Employee> findAll() {
+        return employeeDAO.findAll();
+    }
+}
+```
 
 
 
@@ -1261,82 +1376,8 @@ applicationContext.xml
 
 
 
-### Global exception handling
-* @ControllerAdvice is similar to an filter
-    * pre-process requests to controllers
-    * pre-process responses to handle exception
-#### Dev process
-* Create new @ControllerAdvice
-* Add exception code to @ControllerAdvice
-* Refact the code
-```
-@ControllerAdvice
-public class StudentRestExceptionHandler {
-    // add an exception handler using @ExceptionHandler
-    @ExceptionHandler
-    public ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundException exc){
-        // create a error response
-        StudentErrorResponse error = new StudentErrorResponse();
 
-        error.setStatus(HttpStatus.NOT_FOUND.value());
-        error.setMessage(exc.getMessage());
-        error.setTimeStamp(System.currentTimeMillis());
 
-        // return entity
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<StudentErrorResponse> handleException(Exception exc){
-        // create a error response
-        StudentErrorResponse error = new StudentErrorResponse();
-
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
-        error.setMessage(exc.getMessage()); // se puede cambiar con mensaje personalizado
-        error.setTimeStamp(System.currentTimeMillis());
-
-        // return entity
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-    }
-}
-```
-## Spring Boot REST API Design
-1. Review API requierements (example employee directory)
-    * REST client should be able to get a list of employee, get a single employee, add a new employee, update or delete
-2. Indentify the entitys
-    * use noun
-3. Use HTTP methods to assing action on resource (GET, POST, PUT, DELETE)
-![Real Time Project](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/real-time-project.png "Real Time Project")
-* Don't use the anti-patters, is a bad practice, for endpoints like: /api/addEmployee, /api/deleteEmployee etc
-
-# Spring Boot REST CRUD API
-* REST API with Spring Boot connect to a database
-* Create the DAO and Entity
-
-## Service annotation
-* @Service, like @Repository and @RestController, is an annotation that provide Spring
-* Define Service interface
-```
-public interface EmployeeService {
-    List<Employee> findAll();
-}
-```
-* Define Service implementation
-```
-@Service
-public class EmployeeServiceImpl implements EmployeeService{
-    private EmployeeDAO employeeDAO;
-
-    public EmployeeServiceImpl(EmployeeDAO theEmployeeDAO) {
-        this.employeeDAO = theEmployeeDAO;
-    }
-
-    @Override
-    public List<Employee> findAll() {
-        return employeeDAO.findAll();
-    }
-}
-```
 ### Add or update
 ![add-or-update](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/add-or-update.png "add-or-update")
 * When use the @Service the @Transactional annotations need put in the service class
