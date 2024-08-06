@@ -1220,13 +1220,13 @@ public class StudentRestExceptionHandler {
 ## Spring Boot REST 
 ### API Design
 1. REST client should be able to get a list of employee, get a single employee, add a new employee, update or delete
-2. Indentify the entitys using noun
-3. Use HTTP methods to assing action on resource (GET, POST, PUT, DELETE)
+2. Identify the entities using noun
+3. Use HTTP methods to assign action on resource (GET, POST, PUT, DELETE) 
 ![Real Time Project](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/real-time-project.png "Real Time Project")
-* Don't use the anti-patters, is a bad practice, for endpoints like: /api/addEmployee, /api/deleteEmployee etc
+* Don't use the anti-patterns, is a bad practice, for endpoints like: /api/addEmployee, /api/deleteEmployee etc
 * @Service, like @Repository and @RestController, is an annotation that provide Spring
 #### Dev process for GET:
-* Inport from Spring Initializr: Spring Web, Spring Data JPA, Spring Boot Dev Tools, MySQL Driver
+* Import from Spring Initializr: Spring Web, Spring Data JPA, Spring Boot DevTools, MySQL Driver
 * JPA DAO: create the interface DAO and the implementation
 ```
 @Repository
@@ -1276,7 +1276,7 @@ public class EmployeeController {
     }
 }
 ```
-* Define one single Service interface thet integrate multiple data source (multiple DAOs). Spring provides the @Service annotation.
+* Define one single Service interface that integrates multiple data sources (multiple DAOs). Spring provides the @Service annotation.
 * Define Service implementation and inject the DAO impl
 ```
 @Service
@@ -1294,91 +1294,8 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 }
 ```
-
-
-
-
-
-
-
-## Annotations Part IV:
-* @PostMapping
-* @GetMapping
-* @PutMapping
-* @DeleteMapping
-* @Pointcuts - to create pointcuts
-* @Before - use a pointcuts
-* @Order - order the pointcuts
-* @AfterReturning
-* @AfterThrowing
-* @After
-* @Around
-
-
-
-
----------------------------------------------------------
-
-### Difference between @Controller and @RestController
-* @Controller is used to declare common web controllers which can return HTTP response but @RestController is used to create controllers for REST APIs which can return JSON.
-* @RestController = @Controller + @RequestBody
-* The @Controller is a common annotation which is used to mark a class as Spring MVC Controller while the @RestController is a special controller used in RESTFul web services
-
-
-### Spring development process:
-* Configuration of a spring bean
-```
-<bean id="myCoach" class="inversionOfControl.TrackCoach"></bean>
-```
-* Create the spring container (special implementation: ClassPathXmlApplicationContext, AnnotationConfigApplicationContext, GenericWebApplicationContext, etc)
-```
-ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-```
-* Recover the bean from container (a bean is just an object in java)
-```
-Coach theCoach = context.getBean("myCoach", Coach.class);
-```
-
-
-* Configure the dependency injection in the spring config file, defined in the first step the dependency and in the second step inject the dependency
-applicationContext.xml
-```
-<bean id="myFortuneService" class="springdependency.HappyFortuneService"></bean>
-<bean id="myCoach" class="springdependency.TrackCoach">
-    <constructor-arg ref="myFortuneService"/>
-</bean>
-```
-![Spring behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-behind.png "Spring behind the scene")
-
-
-* config the dependency for injection in the config file
-```
-<bean id="myCricketCoach" class="setterinjection.CricketCoach">
-    <!-- set up the constructor injection -->
-    <property name="fortuneServ" ref="myFortune" />
-</bean>
-```
-![Setter injection](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/setter-injection-method.png "Setter injection")
----------------------------------------------------------
-![Setter injection behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/setter-injection-behind.png "Setter injection behind the scene")
----------------------------------------------------------
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-### Add or update
+### Dev process for add, update and delete
+* For best practice is to apply transaccional boundaries, @Transactional annotation to service methods and remove on DAO methods
 ![add-or-update](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/add-or-update.png "add-or-update")
 * When use the @Service the @Transactional annotations need put in the service class
 
@@ -1387,7 +1304,37 @@ applicationContext.xml
 [DAO](https://github.com/BrandConstantin/SpringBoot3-Spring6/tree/SpringBoot-REST_CRUD_API/07-SpringBoot-REST_CRUD_API/03-SpringBoot-REST_CRUT_API/src/main/java/com/springboot/rest/crud/api/dao)
 * Add Service interface and Service implementation
 [SERVICE](https://github.com/BrandConstantin/SpringBoot3-Spring6/tree/SpringBoot-REST_CRUD_API/07-SpringBoot-REST_CRUD_API/03-SpringBoot-REST_CRUT_API/src/main/java/com/springboot/rest/crud/api/service)
-* Update the app
+* In DAO Impl: 
+```
+    // get employee
+    Employee theEmployee = entityManager.find(Employee.class, theId);
+    ...
+    // save the object or update
+    Employee dbEmployee = entityManager.merge(theEmployee);
+    ...
+    // remove from bbdd
+    entityManager.remove(theEmployee);
+```
+* In Service Impl
+```
+@Override
+public Employee findById(int theId) {
+    return employeeDAO.findById(theId);
+}
+
+@Override
+@Transactional
+public Employee save(Employee theEmployee) {
+    return employeeDAO.save(theEmployee);
+}
+
+@Override
+@Transactional
+public void deleteById(int theId) {
+    employeeDAO.deleteById(theId);
+}
+```
+* Update the controller
 ```
 @RestController
 @RequestMapping("/api")
@@ -1444,6 +1391,87 @@ public class EmployeeController {
     }
 }
 ```
+### Difference between @Controller and @RestController
+* @Controller is used to declare common web controllers which can return HTTP response but @RestController is used to create controllers for REST APIs which can return JSON.
+* @RestController = @Controller + @RequestBody
+* The @Controller is a common annotation which is used to mark a class as Spring MVC Controller while the @RestController is a special controller used in RESTFul web services
+
+
+
+
+
+## Annotations Part IV:
+* @PostMapping
+* @GetMapping
+* @PutMapping
+* @DeleteMapping
+* @Pointcuts - to create pointcuts
+* @Before - use a pointcuts
+* @Order - order the pointcuts
+* @AfterReturning
+* @AfterThrowing
+* @After
+* @Around
+
+
+
+
+---------------------------------------------------------
+
+### Spring development process:
+* Configuration of a spring bean
+```
+<bean id="myCoach" class="inversionOfControl.TrackCoach"></bean>
+```
+* Create the spring container (special implementation: ClassPathXmlApplicationContext, AnnotationConfigApplicationContext, GenericWebApplicationContext, etc)
+```
+ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+```
+* Recover the bean from container (a bean is just an object in java)
+```
+Coach theCoach = context.getBean("myCoach", Coach.class);
+```
+
+
+* Configure the dependency injection in the spring config file, defined in the first step the dependency and in the second step inject the dependency
+applicationContext.xml
+```
+<bean id="myFortuneService" class="springdependency.HappyFortuneService"></bean>
+<bean id="myCoach" class="springdependency.TrackCoach">
+    <constructor-arg ref="myFortuneService"/>
+</bean>
+```
+![Spring behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/spring-behind.png "Spring behind the scene")
+
+
+* config the dependency for injection in the config file
+```
+<bean id="myCricketCoach" class="setterinjection.CricketCoach">
+    <!-- set up the constructor injection -->
+    <property name="fortuneServ" ref="myFortune" />
+</bean>
+```
+![Setter injection](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/setter-injection-method.png "Setter injection")
+---------------------------------------------------------
+![Setter injection behind the scene](https://github.com/BrandConstantin/SpringBoot3-Spring6/blob/main/images/setter-injection-behind.png "Setter injection behind the scene")
+---------------------------------------------------------
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Spring Data JPA
 * Previously used JPA API, from now Spring Data JPA
 * If we need to create anothers DAO (customer, student, product etc) it's need to repeat the same code egain
